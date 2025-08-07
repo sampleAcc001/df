@@ -1,28 +1,33 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Injector, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Vflow, NodeChange, Node, Edge } from 'ngx-vflow';
+import { Vflow, NodeChange, Node, Edge, ConnectionSettings, Connection } from 'ngx-vflow';
 import { FormBuilder, FormGroup, FormArray, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DialogFlowService } from '../../services/dialogflow.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import Notiflix from 'notiflix';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbOffcanvas, NgbOffcanvasRef } from '@ng-bootstrap/ng-bootstrap';
 import { IntentDetailModalComponent } from '../intents/intent-detail-modal/intent-detail-modal.component';
 import { IntentCreateModalComponent } from '../create-intent/intent-create-modal/intent-create-modal.component';
-import { HeaderNavComponent } from "../../components/header-nav/header-nav.component"; // Check the correct import path
+import { IntentCanvasComponent } from '../intents/intent-canvas/intent-canvas.component';
+import { DialogflowIntent } from '../../../../interfaces/dialogFlowIntent.interface';
 
 
 @Component({
   selector: 'app-visualflow',
   standalone: true,
-  imports: [CommonModule, FormsModule, Vflow, ReactiveFormsModule, MatDialogModule, HeaderNavComponent],
+  imports: [CommonModule, FormsModule, Vflow, ReactiveFormsModule, MatDialogModule],
   templateUrl: './visualflow.html',
   styleUrl: './visualflow.css'
 })
-export class Visualflow implements OnInit {
-  constructor(private fb: FormBuilder, private dfService: DialogFlowService, private modalService: NgbModal) { }
+export class VisualFlowComponent implements OnInit {
+  lastUpdated!: string | number | Date;
+
+  constructor(private fb: FormBuilder, private dfService: DialogFlowService, private modalService: NgbModal, private offcanvasService: NgbOffcanvas) { }
 
   nodes: Node[] = [];
-  edges: Edge[] = [];
+  edges: Edge[] = [
+
+  ];
   counter = 0;
 
   selectedNode: Node | null = null;
@@ -33,17 +38,22 @@ export class Visualflow implements OnInit {
   intentForm!: FormGroup;
   isSaving = false;
 
+  intents: DialogflowIntent[] = [];
+  offcanvasRef?: NgbOffcanvasRef;
+
   dotsBackgroundConfig = {
     type: 'dots',
     size: 2,
     spacing: 20,
     color: '#ccc'
   } as const; // "as const" for type inference
+
+  backgroundColor = '#000';
+
   readonly dialog = inject(MatDialog);
   ngOnInit(): void {
     this.LoadIntents();
   }
-
   LoadIntents() {
     Notiflix.Loading.circle('Loading Intents...');
     this.dfService.getIntents().subscribe(data => {
@@ -52,11 +62,32 @@ export class Visualflow implements OnInit {
       () => Notiflix.Loading.remove()
     );
   }
-
+  public connectionSettings: ConnectionSettings = {
+    curve: 'smooth-step',
+  };
+  public createEdge(connection: Connection) {
+    this.edges = [
+      ...this.edges,
+      {
+        ...connection,
+        id: `${connection.source} -> ${connection.target}`,
+        markers: {
+          start: {
+            type: 'arrow-closed',
+          },
+          end: {
+            type: 'arrow',
+          },
+        },
+        curve: 'smooth-step',
+      },
+    ];
+  }
   createNodesFromIntents(intents: any[]) {
     const nodeMap = new Map<string, any>();
     const positioned = new Set<string>();
     const positionTracker = new Map<number, number>();
+    this.intents = intents;
 
     this.nodes = [];
     this.edges = [];
@@ -86,7 +117,8 @@ export class Visualflow implements OnInit {
           this.edges.push({
             id: `edge-${intent.id}-${child.id}`,
             source: intent.id,
-            target: child.id
+            target: child.id,
+            curve: 'smooth-step'
           });
         }
         placeIntentTree(child, level + 1);
@@ -105,7 +137,8 @@ export class Visualflow implements OnInit {
           this.edges.push({
             id: `edge-${welcomeIntent.id}-${intent.id}`,
             source: welcomeIntent.id,
-            target: intent.id
+            target: intent.id,
+            curve: 'smooth-step'
           });
         }
       }
@@ -116,12 +149,12 @@ export class Visualflow implements OnInit {
       const y = rootY;
       this.nodes.push(this.buildNode(fallbackIntent.id, fallbackIntent.displayName, maxX, y, fallbackIntent.isFallback));
       this.nodes.forEach(n => {
-        // Avoid incoming edge to welcome intent or fallback intent itself
         if (n.id !== fallbackIntent.id && n.id !== welcomeIntent?.id) {
           this.edges.push({
             id: `edge-${n.id}-${fallbackIntent.id}`,
             source: n.id,
-            target: fallbackIntent.id
+            target: fallbackIntent.id,
+            curve: 'smooth-step'
           });
         }
       });
@@ -133,8 +166,8 @@ export class Visualflow implements OnInit {
       id,
       type: 'default',
       point: { x, y },
-      width: 140,
-      height: 60,
+      width: isFallback ? 200 : 160,
+      height: isFallback ? 80 : 60,
       text: label
     };
   }
@@ -148,8 +181,6 @@ export class Visualflow implements OnInit {
       size: 'xl', centered: true,
       scrollable: true,
     });
-
-    // 🔥 Pass the data here!
     if (data) {
       modalRef.componentInstance.intentdata = data;
     }
@@ -179,16 +210,43 @@ export class Visualflow implements OnInit {
     this.edges = this.edges.filter(e => e.id !== edgeId);
   }
 
-  onNodesChangeHandler(changes: NodeChange[]) {
+  async onNodesChangeHandler(changes: NodeChange[]) {
     for (const change of changes) {
       if (change.type === 'select' && change.selected === true) {
         const node = this.nodes.find(n => n.id === change.id);
-        if (node) {
-          this.OpenCustomModal(IntentDetailModalComponent, change.id) // ✅ open modal only on actual click
+        if (!node) return;
+
+        const intentData = this.intents.find(i => i.id === node.id);
+
+        // Dismiss previous offcanvas if it exists
+        if (this.offcanvasRef) {
+          await this.offcanvasRef.dismiss();
+          this.offcanvasRef = undefined; // clear the reference
         }
+
+        // Create custom injector with intent data
+        const injector = Injector.create({
+          providers: [{ provide: 'intentData', useValue: intentData }],
+          parent: this.offcanvasService['_injector'] // fallback if needed
+        });
+
+        // Open new offcanvas and store the reference
+        this.offcanvasRef = this.offcanvasService.open(IntentCanvasComponent, {
+          position: 'end',
+          backdrop: false,
+          scroll: true,
+          panelClass: 'w-full sm:max-w-md shadow-lg',
+          injector: injector,
+        });
+
+        // Optionally handle close/dismiss events
+        this.offcanvasRef.result.finally(() => {
+          this.offcanvasRef = undefined;
+        });
       }
     }
   }
+
 
   saveChanges() {
     if (!this.selectedNode) return;
@@ -227,5 +285,20 @@ export class Visualflow implements OnInit {
       this.deleteIntent(this.selectedNode.id);
       this.closeModal();
     }
+  }
+  resetView() {
+    // Recreate nodes with original positions
+    this.createNodesFromIntents([...this.intents]);
+
+    // Clear selections
+    this.selectedNode = null;
+    this.selectedEdge = null;
+
+    // User feedback
+    Notiflix.Notify.info('Flow reset to initial state', {
+      position: 'right-top',
+      timeout: 1500,
+      fontSize: '14px'
+    });
   }
 }

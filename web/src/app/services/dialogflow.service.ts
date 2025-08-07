@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AgentConfig } from '../../../interfaces/agent.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ export class DialogFlowService {
 
   private baseUrl = 'http://localhost:5000/api';
   projectDetails: any;
+  agentDetails!: AgentConfig;
   constructor(private http: HttpClient) { }
 
   getConcatenatedIntentId(intentId: string): string {
@@ -36,8 +38,8 @@ export class DialogFlowService {
   getIntentById(intentId: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/intents/${intentId}`);
   }
-  sendMessageToAgent(message: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/detect-intents`, { message: message });
+  sendMessageToAgent(message: string, userId: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/detect-intents`, { message: message, userId: userId });
   }
 
 

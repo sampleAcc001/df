@@ -146,7 +146,8 @@ export class IntentDetails implements OnInit {
           this.intentUpdated.emit('intentUpdated');
           return;
         }
-        this.router.navigate(['/intents']);
+        this.intentData ? this.router.navigate(['/graph-view']) : this.router.navigate(['/intents']);
+        Notiflix.Notify.success('Intent updated successfully!');
       },
       error: () => {
         this.isSaving = false;
@@ -169,12 +170,13 @@ export class IntentDetails implements OnInit {
         const id = `projects/${this.dfService.projectDetails[0].projectId}/agent/intents/${this.intentId}`;
         this.dfService.deleteIntent(id).subscribe({
           next: () => {
-            Notiflix.Notify.success('Intent deleted successfully!');
             if (this.intentData) {
               this.intentDeleted.emit('intentDeleted');
               return;
             }
-            this.router.navigate(['/intents']);
+            this.intentData ? this.router.navigate(['/graph-view']) : this.router.navigate(['/intents']);
+            Notiflix.Notify.success('Intent deleted successfully!');
+
           },
           error: () => {
             Notiflix.Notify.failure('Failed to delete intent. Please try again.');

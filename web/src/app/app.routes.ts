@@ -9,7 +9,7 @@ import { IntentDetails } from './pages/intents/intent-details/intent-details';
 import { Login } from './pages/login/login';
 import { EntityAddComponent } from './pages/entities-page/entity-add/entity-add';
 import { EntityDetailsComponent } from './pages/entities-page/entity-details/entity-details';
-import { Visualflow } from './pages/visualflow/visualflow';
+import { VisualFlowComponent } from './pages/visualflow/visualflow';
 
 
 export const routes: Routes = [
@@ -31,7 +31,7 @@ export const routes: Routes = [
   { path: 'entity/details/:id', component: EntityDetailsComponent },
 
 
-  { path: 'graph-view', component: Visualflow },
+  { path: 'graph-view', component: VisualFlowComponent },
 
 
   { path: '**', redirectTo: '/login' },

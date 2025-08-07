@@ -1,8 +1,10 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DialogFlowService } from '../../services/dialogflow.service';
 import Notiflix from 'notiflix';
+import { CommonService } from '../../services/common.service';
+import { AgentConfig } from '../../../../interfaces/agent.interface';
 
 @Component({
   selector: 'app-chat-widget',
@@ -11,16 +13,20 @@ import Notiflix from 'notiflix';
   templateUrl: './chat-widget.html',
   styleUrls: ['./chat-widget.css']
 })
-export class ChatWidgetComponent implements AfterViewInit, OnDestroy {
+export class ChatWidgetComponent implements AfterViewInit, OnDestroy, OnInit {
 
   isOpen = false;
-  messages: any[] = [
-
-  ];
+  messages: any[] = [];
   newMessage = '';
+  AgentInfo!: AgentConfig;
   @ViewChild('messageContainer') messageContainer!: ElementRef;
 
-  constructor(private DialogFlowService: DialogFlowService) { }
+  constructor(private dfService: DialogFlowService, private common: CommonService) { }
+  ngOnInit(): void {
+    this.dfService.getAgents().subscribe((data: any) => {
+      this.AgentInfo = data;
+    })
+  }
   ngOnDestroy(): void {
     // Cleanup if necessary
     this.messages = [];
@@ -55,9 +61,10 @@ export class ChatWidgetComponent implements AfterViewInit, OnDestroy {
     this.newMessage = '';
 
     // Send message to backend via DialogFlowService
-    this.DialogFlowService.sendMessageToAgent(message).subscribe({
+    this.dfService.sendMessageToAgent(message, this.common.userId).subscribe({
       next: (response) => {
         this.messages.push({ sender: 'bot', text: response?.response || 'No response from bot.' });
+        console.log('Bot response:', response);
       },
       error: (err) => {
         console.error('Error sending message:', err);

@@ -1,12 +1,12 @@
 const express = require('express');
 const dialogflow = require('@google-cloud/dialogflow');
-const uuid = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 const path = require('path');
 const router = express.Router();
 const { google } = require('googleapis');
 
 // --- 🔐 Path to service account key ---
-const KEY_PATH = path.join(__dirname, '../keys/healthbot-qtlp-071f70d177a8.json');
+const KEY_PATH = path.join(__dirname, '../keys/healthbot-qtlp-626a597c01c9.json');
 const projectId = require(KEY_PATH).project_id;
 
 // --- 💡 Clients with auth ---
@@ -105,14 +105,20 @@ router.post('/create-intent', async (req, res) => {
 });
 
 // ---------- DETECT INTENT ----------
-router.post('/detect-intents', async (req, res) => {
-    const { message } = req.body;
+const sessionStore = {};
 
-    if (!message) {
-        return res.status(400).json({ error: 'Message is required' });
+router.post('/detect-intents', async (req, res) => {
+    const { message, userId } = req.body;
+
+    if (!message || !userId) {
+        return res.status(400).json({ error: 'Both message and userId are required' });
     }
 
-    const sessionId = uuid.v4();
+    // Get or create session ID for this user
+    if (!sessionStore[userId]) {
+        sessionStore[userId] = uuidv4();
+    }
+    const sessionId = sessionStore[userId];
     const sessionPath = sessionClient.projectAgentSessionPath(projectId, sessionId);
 
     const request = {
@@ -120,7 +126,7 @@ router.post('/detect-intents', async (req, res) => {
         queryInput: {
             text: {
                 text: message,
-                languageCode: 'en',
+                languageCode: 'en', // or your Dialogflow agent's language
             },
         },
     };
@@ -132,13 +138,13 @@ router.post('/detect-intents', async (req, res) => {
         res.json({
             response: result.fulfillmentText,
             intent: result.intent?.displayName || 'No Intent Matched',
+            confidence: result.intentDetectionConfidence,
         });
     } catch (error) {
         console.error('Dialogflow error:', error.message);
         res.status(500).json({ error: 'Error detecting intent' });
     }
 });
-
 // ---------- GET All INTENTS ----------
 router.get('/intents', async (req, res) => {
     try {

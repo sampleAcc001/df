@@ -1,25 +1,64 @@
-<div class="page-container">
-    <div class="page-header">
-        <div class="header-left">
-            <h2 class="text-2xl font-medium">Overview</h2>
-            <p class="text-muted mb-0">This is the graphical representation of your intents</p>
+<div class="flex flex-col min-h-screen bg-gray-50">
+    <!-- Header Section -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 px-6 py-4">
+        <div class="flex items-center gap-3">
+            <span class="material-icons text-blue-600">account_tree</span>
+            <div>
+                <h2 class="text-xl font-semibold text-gray-800">Intent Flow Visualization</h2>
+                <p class="text-sm text-gray-500 mt-1">
+                    Interactive map of your dialog flow. Select any intent to view details.
+                </p>
+            </div>
         </div>
-        <div class="header-right">
-            <button class="btn btn-primary" (click)="addIntent()">
-                <i class="material-icons me-1">add</i> Add Intent
+        <div class="flex gap-3">
+            <!-- <button
+                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                (click)="resetView()">
+                <span class="material-icons text-sm">refresh</span>
+                Reset View
+            </button> -->
+            <button
+                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                (click)="addIntent()">
+                <span class="material-icons text-sm">add</span>
+                Create Intent
             </button>
         </div>
     </div>
 
+    <!-- Main Content Area -->
+    <!-- Status Bar -->
 
-    <vflow [nodes]="nodes" [edges]="edges" [background]="dotsBackgroundConfig" [view]="[600, 600]"
-        (onConnect)="onEdgeConnect($event)" (onNodesChange)="onNodesChangeHandler($event)"
-        style="height: 85vh; width: 100%;" class="border border-gray-200 shadow-xs">
-        <ng-container *ngFor="let edge of edges">
-            <div *ngIf="edge" (contextmenu)="selectEdge(edge); $event.preventDefault();" class="hidden"
-                [attr.data-edge-id]="edge.id"></div>
-        </ng-container>
-    </vflow>
+    <div class="flex-1 p-6">
+        <!-- Visualization Container -->
+        <div class="flex justify-between items-center text-xs text-gray-500 mt-3 mb-3">
+            <div class="flex items-center">
+                <span class="material-icons align-middle text-xs mr-1">schema</span>
+                Showing {{ nodes.length }} intents and {{ edges.length }} connections
+            </div>
+            <div class="flex items-center">
+                <span class="material-icons align-middle text-xs mr-1">touch_app</span>
+                Click on an intent to view its details.
+            </div>
+        </div>
+        <div class="relative h-full rounded-lg">
+            <!-- Instructional Overlay -->
 
 
+            <!-- Vflow Visualization -->
+            <vflow [nodes]="nodes" [edges]="edges" [background]="dotsBackgroundConfig"
+                (onConnect)="onEdgeConnect($event)" (onNodesChange)="onNodesChangeHandler($event)"
+                [connection]="connectionSettings" class="w-full h-[75vh] rounded-md border border-gray-200">
+
+                <!-- Hidden edge context menu handlers -->
+                <ng-container *ngFor="let edge of edges">
+                    <div *ngIf="edge" (contextmenu)="selectEdge(edge); $event.preventDefault();" class="hidden"
+                        [attr.data-edge-id]="edge.id">
+                    </div>
+                </ng-container>
+            </vflow>
+
+
+        </div>
+    </div>
 </div>
