@@ -1,0 +1,23 @@
+<div class="flex flex-col justify-between gap-4 mb-8 sm:flex-row sm:items-center sm:gap-6">
+    <!-- Left side - Title and description -->
+    <div class="space-y-1">
+        <h1 class="text-2xl font-medium text-gray-900 tracking-tight">Entities</h1>
+        <p class="text-sm text-gray-500 max-w-2xl">
+            Define user entities and agent fetches for conversational flows
+        </p>
+    </div>
+
+    <!-- Right side - Action button -->
+    <div>
+        <button (click)="addData()"
+            class="inline-flex items-center px-4 py-2.5 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-150">
+            <svg xmlns="http://www.w3.org/2000/svg" class="-ml-0.5 mr-2 h-5 w-5" viewBox="0 0 20 20"
+                fill="currentColor">
+                <path fill-rule="evenodd"
+                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                    clip-rule="evenodd" />
+            </svg>
+            Add Entity
+        </button>
+    </div>
+</div>

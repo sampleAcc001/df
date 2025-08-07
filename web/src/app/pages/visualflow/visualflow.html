@@ -1,0 +1,25 @@
+<div class="page-container">
+    <div class="page-header">
+        <div class="header-left">
+            <h2 class="text-2xl font-medium">Overview</h2>
+            <p class="text-muted mb-0">This is the graphical representation of your intents</p>
+        </div>
+        <div class="header-right">
+            <button class="btn btn-primary" (click)="addIntent()">
+                <i class="material-icons me-1">add</i> Add Intent
+            </button>
+        </div>
+    </div>
+
+
+    <vflow [nodes]="nodes" [edges]="edges" [background]="dotsBackgroundConfig" [view]="[600, 600]"
+        (onConnect)="onEdgeConnect($event)" (onNodesChange)="onNodesChangeHandler($event)"
+        style="height: 85vh; width: 100%;" class="border border-gray-200 shadow-xs">
+        <ng-container *ngFor="let edge of edges">
+            <div *ngIf="edge" (contextmenu)="selectEdge(edge); $event.preventDefault();" class="hidden"
+                [attr.data-edge-id]="edge.id"></div>
+        </ng-container>
+    </vflow>
+
+
+</div>

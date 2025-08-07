@@ -1,0 +1,3 @@
+Storage -- common service or ngrx implementation for avoiding direct service calls in components
+
+login page -- matching design with logo and login form as intello

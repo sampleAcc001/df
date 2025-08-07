@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "intellobot-ikfj",
+  "private_key_id": "f83f3448d054de420aeebedf40a90fc9f368160f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCduEKkiR/+Uzgd\nYCSrsdqTCOByN+vmyj5NfcfLUpAelCJr66Ir8gnDRqLP4MfqF0/STbxz8fIgipku\npw0BXwhzvvgy2wD+7P9HyIhUgEU+Ap77tv5+MMfrbFyMiVrvnhID+oPVlMB/1+SS\ntXun8eUoQMNFAQR7C2//QWH3eiQP+VOmY6jOLvmX8ifeJv3rlN3ZABcTX2sVK9v9\nK1MmtgyDgU/n2Mx2GYA+VXw2FqpMAqfyeNaebpk1fMzpON2daH4su0isrG2XS6il\nQDnjujmhintspbIIKpjC76D9DAb/W+NdnsQc72ecuLnkrcbtV+nCBksYtg91m4iR\nDAebnX8XAgMBAAECggEAHmg22Pfi5ipvKCKwDzYD2NMeSocDgQQ+zLvSOB3b0Tlo\nBXxxUJ2iSjalDwTcJgKGjhoUmhnsP1/ZNohYVopW29HWkh9s6rkQYmuD9R6hutnQ\nguD94aBP+tBya1nT4VyNRp0Wq6e5ESyzUaGRjIhzULZjrzsJ/RrwZbraQ1cV+soe\nWAQjQoic8/fTontFW8f1yMjcL/tGNUdnfVE4Uc8kB8+/ahNx8UKYnrYqVRigchaE\nxB3UNCRB/+3Ja8AMYpnJQbci2h0ovkNencqyLw88s4TOpdrf+Vy121BAzicBD0G1\nnzGPB8aEAe4QkPMFHi/SDwhjBTcb7RfouSEFIniiEQKBgQDOMx09/taLoHVfUnW3\n5W9bTuAVygguPCUa+sgkRqJA+td22+PlWXY9Zv+isMwK7ut2Jgm65wXSmGFfWnhw\nlrr2LMlIEybNP7daVMrYkn0JqYB07GdgYwwuqb/oUXz8Q5w0/ITcLiF1WUlLJW24\nyU37kxN8ioZ2I8pC6VYOqvRsaQKBgQDDz7zB1p8r9t0iImWkTFhVcX6gE5lJCKXj\n0txP0cN7pR1aLL35bxb+0XGWGz7MnNU/Ufag+Y18eWlI2o86n5Xjq+TckfwOSn0C\nDEX4L+Ft6YrIJNWsY9f7bmxHlZRJB/8KU5VVIkG+TgKZidRyXl85mTWWLTabPYTk\nIyWqvgMffwKBgCKXLIaj43XU2xu8h4br9DxLBQhitfCbolXeUAjV2I4yBkcoKBjn\nYxB14Nh39CK5ZcKSKvuxmaZ0bZFDagTpJD/7z2BJ5i50S9vZcZXXLSabyrLSnZzr\nwLVrQIhGc0MWTHQPEHKnQnGfIs56XueqzWwwhgpUaq4S3vFOl2MqhopRAoGAP6uG\n1wiwjR0iXn0My9W/S1kyMV7uEt9rAZ+I37N3evb/iljOFRNYSNdVtdd6HhJJDOPb\n7A/5P6ZC49udgxRtKrC0JDyb1xHFgCr5fXAkPxcXd2jyybFVg34uW0B6DR06guMW\nxa3z7qtzEPXOTLn/AL2evQxKm0PvuDbtgo1yeoUCgYEAtNh9GGm/mM8B/rbBxyv7\nWDP3PJh6Kk4El0jSphSNJtzBGQ07tg20mAQMyXTNgMc4UsMRTc6IoHlFWEk+qolq\n5LX1k0/Sp/lJJvZQop0wwtVr0tkED1mSsptAWvdxQAAVZklq+o+sTMgmUGmy8Fp/\nOHNjf++uxDcMnBbaLwbMHLM=\n-----END PRIVATE KEY-----\n",
+  "client_email": "intello-bot-service@intellobot-ikfj.iam.gserviceaccount.com",
+  "client_id": "108020687103433814447",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/intello-bot-service%40intellobot-ikfj.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

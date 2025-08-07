@@ -1,0 +1,157 @@
+<div class="page-container">
+    <div class="page-header">
+        <div class="header-nav">
+            <button class="back-btn" (click)="goBack()">
+                <span class="material-icons">arrow_back</span>
+            </button>
+            <div class="header-content">
+                <h1 class="page-title"> {{intent?.displayName || 'Intent details'}}</h1>
+                <p class="page-subtitle">Update intent for your agent</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-wrapper">
+        <div class="form-container">
+            <form [formGroup]="intentForm" class="intent-form">
+                <div class="form-section">
+                    <h2 class="section-title">Intent Details</h2>
+
+                    <div class="form-group">
+                        <label for="intentName">Intent Name</label>
+                        <input id="intentName" type="text" class="form-control" formControlName="displayName"
+                            placeholder="Enter intent name" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="intentDescription">Description</label>
+                        <textarea id="intentDescription" class="form-control" formControlName="description" rows="2"
+                            placeholder="Enter intent description"></textarea>
+                    </div>
+                </div>
+
+
+                <div class="form-section">
+                    <h2 class="section-title">Training Phrases</h2>
+
+                    <div formArrayName="trainingPhrases">
+                        <div class="response-item" *ngFor="let phrase of trainingPhrases.controls; let i = index"
+                            [formGroupName]="i">
+                            <input type="text" class="response-input" formControlName="text"
+                                placeholder="Type a user phrase" required />
+                            <button type="button" class="remove-btn" (click)="removeTrainingPhrase(i)">
+                                <span class="material-icons">remove_circle_outline</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="button" class="add-btn" (click)="addTrainingPhrase()">
+                        <span class="material-icons">add</span>
+                        Add Training Phrase
+                    </button>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title">Responses</h2>
+
+                    <div formArrayName="responses">
+                        <div class="response-item" *ngFor="let response of responses.controls; let i = index"
+                            [formGroupName]="i">
+                            <input type="text" class="response-input" formControlName="text"
+                                placeholder="Enter bot response" required />
+                            <button type="button" class="remove-btn" (click)="removeResponse(i)">
+                                <span class="material-icons">remove_circle_outline</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="button" class="add-btn" (click)="addResponse()">
+                        <span class="material-icons">add</span>
+                        Add Response
+                    </button>
+                </div>
+
+                <div class="form-actions flex flex-wrap justify-end gap-2 mt-4">
+                    <!-- Update Button -->
+                    <button type="submit"
+                        class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium py-1.5 px-3 rounded shadow-sm transition disabled:opacity-50 disabled:cursor-not-allowed"
+                        [disabled]="isSaving" (click)="updateIntent()">
+                        Update
+                    </button>
+
+                    <!-- Cancel Button -->
+                    <button type="button"
+                        class="bg-gray-200 hover:bg-gray-300 text-gray-700 text-xs font-medium py-1.5 px-3 rounded shadow-sm transition"
+                        (click)="goBack()">
+                        Cancel
+                    </button>
+
+                    <!-- Delete Button -->
+                    <button type="button"
+                        class="bg-red-600 hover:bg-red-700 text-white text-xs font-medium py-1.5 px-3 rounded shadow-sm flex items-center gap-1 transition"
+                        (click)="deleteIntent()">
+                        <span class="material-icons text-sm">delete</span>
+                        Delete
+                    </button>
+
+                    <!-- Add Follow-up Intent -->
+                    <div class="relative inline-block text-left">
+                        <!-- Trigger Button -->
+                        <button #triggerBtn type="button" (click)="toggleFollowupDropdown(triggerBtn)"
+                            class="text-blue-600 hover:text-blue-700 text-xs font-medium py-1.5 px-2 transition">
+                            Add Follow-up Intent
+                        </button>
+
+                        <!-- Drop-Up Dropdown (with scrollable support) -->
+                        <div *ngIf="showFollowupDropdown" [ngStyle]="dropdownStyles"
+                            class="fixed w-52 max-h-52 overflow-y-auto bg-white border border-gray-200 rounded-md shadow-lg z-[9999] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+                            <button *ngFor="let category of followupCategories" (click)="addFollowupIntent(category)"
+                                class="block w-full text-left text-gray-700 text-xs px-4 py-2 hover:bg-gray-100">
+                                {{ category }}
+                            </button>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+        <div class="info-panel">
+            <div class="info-card">
+                <div class="info-header">
+                    <span class="material-icons">lightbulb</span>
+                    <h3>Tips</h3>
+                </div>
+                <div class="info-content">
+                    <ul>
+                        <li>Add multiple variations of user phrases</li>
+                        <li>Use simple, natural language</li>
+                        <li>Keep responses short and informative</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-header">
+                    <span class="material-icons">help_outline</span>
+                    <h3>Need Help?</h3>
+                </div>
+                <div class="info-content">
+                    <ul>
+                        <li><a href="#" class="info-link">Intent Design Guide</a></li>
+                        <li><a href="#" class="info-link">Training Tips</a></li>
+                        <li><a href="#" class="info-link">Dialogflow Docs</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- test console -->
+<!-- <app-chat-widget></app-chat-widget> -->

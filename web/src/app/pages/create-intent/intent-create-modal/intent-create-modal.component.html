@@ -1,0 +1,13 @@
+<div id="modal-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-5xl max-h-[90vh] overflow-y-auto p-6 relative">
+        <!-- Close button -->
+        <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-xl" (click)="modal.dismiss()">
+            ✕
+        </button>
+
+        <!-- Scrollable Content -->
+        <app-create-intent-page (dataDismissed)="modal.dismiss('dataDismissed')"
+            (intentCreated)="modal.close('intentCreated')" (dataDismissed)="modal.dismiss('dataDismissed')"
+            [isModal]="isModal"></app-create-intent-page>
+    </div>
+</div>

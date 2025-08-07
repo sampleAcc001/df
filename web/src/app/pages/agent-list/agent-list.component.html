@@ -1,0 +1,85 @@
+<div class="min-h-screen bg-gray-50">
+    <!-- Header Section -->
+    <div class="px-6 py-8 border-b border-gray-200 bg-white">
+        <div class="max-w-7xl flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-semibold text-gray-900">Agents</h1>
+                <p class="text-xs text-gray-500 font-medium tracking-wide uppercase mt-1">
+                    Create and manage your conversational AI agents
+                </p>
+            </div>
+            <!-- <button class="flex items-center space-x-1 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-md shadow-sm text-white text-xs font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+        <span class="material-icons text-sm">add</span>
+        <span>Create Agent</span>
+      </button> -->
+        </div>
+    </div>
+
+    <!-- Content Section -->
+    <div class="max-w-7xl px-6 py-8">
+        <div *ngIf="agents.length > 0; else emptyState" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Agent Cards -->
+            <div *ngFor="let agent of agents" (click)="openAgent()"
+                class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer group">
+
+                <!-- Card Header -->
+                <div class="flex items-center justify-between p-4 border-b border-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <div class="flex-shrink-0 h-10 w-10 rounded-lg bg-indigo-50 flex items-center justify-center">
+                            <img *ngIf="agent.avatarUri; else defaultIcon" [src]="agent.avatarUri" alt="Agent Avatar"
+                                class="h-full w-full object-cover rounded-lg" />
+                            <ng-template #defaultIcon>
+                                <span class="material-icons text-indigo-600">smart_toy</span>
+                            </ng-template>
+                        </div>
+                        <div class="flex items-center space-x-1.5">
+                            <span class="h-2 w-2 rounded-full" [class.bg-green-400]="agent.enableLogging"
+                                [class.bg-gray-300]="!agent.enableLogging"></span>
+                            <span class="text-xs font-medium" [class.text-green-600]="agent.enableLogging"
+                                [class.text-gray-500]="!agent.enableLogging">
+                                {{ agent.enableLogging ? 'Logging Enabled' : 'Logging Disabled' }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Content -->
+                <div class="p-4">
+                    <h3 class="text-sm font-semibold text-gray-900 mb-1">{{ agent.displayName }}</h3>
+                    <p class="text-xs text-gray-500 mb-4 line-clamp-2">
+                        {{ agent.description || 'No description available.' }}
+                    </p>
+
+                    <div class="flex space-x-4">
+                        <div class="flex items-center space-x-1">
+                            <span class="material-icons text-gray-400 text-xs">language</span>
+                            <span class="text-xs text-gray-500">{{ agent.defaultLanguageCode }}</span>
+                        </div>
+                        <div class="flex items-center space-x-1">
+                            <span class="material-icons text-gray-400 text-xs">schedule</span>
+                            <span class="text-xs text-gray-500">{{ agent.timeZone }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <ng-template #emptyState>
+            <div class="text-center py-16">
+                <div class="mx-auto h-16 w-16 flex items-center justify-center rounded-full bg-indigo-50 mb-4">
+                    <span class="material-icons text-indigo-600 text-3xl">smart_toy</span>
+                </div>
+                <h2 class="text-lg font-medium text-gray-900 mb-1">No agents yet</h2>
+                <p class="text-xs text-gray-500 max-w-md mx-auto mb-6">
+                    Create your first conversational AI agent to get started
+                </p>
+                <button
+                    class="inline-flex items-center space-x-1 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-md shadow-sm text-white text-xs font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                    <span class="material-icons text-sm">add</span>
+                    <span>Create your first agent</span>
+                </button>
+            </div>
+        </ng-template>
+    </div>
+</div>
