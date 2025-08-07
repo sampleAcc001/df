@@ -13,6 +13,8 @@ export class CommonService {
   Intents: DialogflowIntent[] = [];
   Entities: EntitiesPage[] = [];
   Agents: AgentConfig[] = [];
+
+  userId: string = 'user-123'; //dummy user id for now
   constructor(
     private modalService: NgbModal,
     private dfService: DialogFlowService
