@@ -6,7 +6,7 @@
         </button>
 
         <!-- Scrollable Content -->
-        <app-intent-details [intentData]="intentdata" (dataDismissed)="modal.dismiss('dataDismissed')"
+        <app-intent-details [IntentId]="intentdata" (dataDismissed)="modal.dismiss('dataDismissed')"
             (intentDeleted)="modal.close('intentDeleted')"
             (intentUpdated)="modal.close('intentUpdated')"></app-intent-details>
     </div>

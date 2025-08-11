@@ -35,8 +35,8 @@ export class CreateIntentPageComponent implements OnInit {
 
   @Output() intentCreated = new EventEmitter<any>();
   @Output() dataDismissed = new EventEmitter<any>();
-  @Input({ required: true }) isModal!: boolean;
-
+  @Input() isModal!: boolean;
+  @Input() OpeningFromGraph!: boolean;
   intents = [
 
   ];
@@ -93,16 +93,15 @@ export class CreateIntentPageComponent implements OnInit {
     this.dfService.createIntent(intentData).subscribe(
       response => {
         console.log('Intent created:', response);
-        this.intentCreated.emit(response);
+        this.intentCreated.emit('intentCreated');
         Notiflix.Notify.success('Intent created successfully!');
-        this.router.navigate(['/intents']);
+        this.isModal ? this.router.navigate(['/graph-view']) : this.router.navigate(['/intents']);
       },
       error => {
         console.error('Error creating intent:', error);
         Notiflix.Notify.failure('Failed to create intent. Please try again.');
       }
     );
-    this.router.navigate(['/intents']);
   }
 
 

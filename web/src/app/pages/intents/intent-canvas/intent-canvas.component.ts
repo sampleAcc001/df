@@ -2,19 +2,22 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+import { IntentDetailIdComponent } from "../intent-detail-id/intent-detail-id.component";
+import { CreateIntentPageComponent } from "../../create-intent/create-intent";
+import { IntentDetails } from "../intent-details/intent-details";
+import { DialogflowIntent } from '../../../../../interfaces/dialogFlowIntent.interface';
 
 @Component({
   selector: 'app-intent-canvas',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, IntentDetailIdComponent, CreateIntentPageComponent, IntentDetails],
   templateUrl: './intent-canvas.component.html',
   styleUrl: './intent-canvas.component.css'
 })
 export class IntentCanvasComponent {
-
-  constructor(public activeOffCanvas: NgbActiveOffcanvas, @Inject('intentData') public intent: any, private router: Router) { }
+  page: string = 'view-intent';
+  constructor(public activeOffCanvas: NgbActiveOffcanvas, @Inject('intentData') public intent: DialogflowIntent, private router: Router) { }
   onEditIntent(intent: any) {
-    this.activeOffCanvas.dismiss();
-    this.router.navigate(['/intents/details', intent.id]);
+    this.page = 'edit-intent';
   }
 }

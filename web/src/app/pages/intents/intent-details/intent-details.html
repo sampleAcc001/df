@@ -1,4 +1,19 @@
 <div class="page-container">
+
+    @if(FormGraph){
+    <div class="flex items-center justify-between px-4 py-3 md:px-6 md:py-4 border-b border-gray-200 bg-gray-50">
+        <div class="flex items-center space-x-2">
+            <span class="material-icons text-blue-600 text-lg">psychology</span>
+            <h5 class="text-sm md:text-base font-semibold text-gray-800 truncate max-w-[180px] md:max-w-none">
+                {{ intent?.displayName || 'Intent Details' }}
+            </h5>
+        </div>
+        <button class="p-1 rounded-full hover:bg-gray-200 transition" (click)="activeOffCanvas.dismiss()"
+            aria-label="Close">
+            <span class="material-icons text-gray-500 hover:text-gray-700 text-sm">close</span>
+        </button>
+    </div>
+    }@else {
     <div class="page-header">
         <div class="header-nav">
             <button class="back-btn" (click)="goBack()">
@@ -10,6 +25,8 @@
             </div>
         </div>
     </div>
+    }
+
 
     <div class="content-wrapper">
         <div class="form-container">
@@ -122,6 +139,7 @@
 
         </div>
 
+        @if(!FormGraph){
         <div class="info-panel">
             <div class="info-card">
                 <div class="info-header">
@@ -151,5 +169,6 @@
                 </div>
             </div>
         </div>
+        }
     </div>
 </div>

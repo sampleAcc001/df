@@ -7,7 +7,7 @@
 
         <!-- Scrollable Content -->
         <app-create-intent-page (dataDismissed)="modal.dismiss('dataDismissed')"
-            (intentCreated)="modal.close('intentCreated')" (dataDismissed)="modal.dismiss('dataDismissed')"
+            (intentCreated)="onIntentCreated($event)" (dataDismissed)="modal.dismiss('dataDismissed')"
             [isModal]="isModal"></app-create-intent-page>
     </div>
 </div>

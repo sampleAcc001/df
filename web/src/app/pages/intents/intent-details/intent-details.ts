@@ -7,6 +7,7 @@ import Notiflix from 'notiflix';
 import { ChatWidgetComponent } from "../../../components/chat-widget/chat-widget";
 import { CommonService } from '../../../services/common.service';
 import { FollowUpIntentFormComponent } from '../follow-up-intent-form/follow-up-intent-form.component';
+import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-intent-details',
@@ -23,8 +24,8 @@ export class IntentDetails implements OnInit {
   isSaving = false;
   intentId!: string;
   intent: any;
-  @Input() intentData: any;
-
+  @Input() IntentId: any;
+  @Input() FormGraph!: boolean;
   @Output() intentUpdated = new EventEmitter<any>();
   @Output() intentDeleted = new EventEmitter<any>();
   @Output() dataDismissed = new EventEmitter<any>();
@@ -33,11 +34,12 @@ export class IntentDetails implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private dfService: DialogFlowService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    public activeOffCanvas: NgbActiveOffcanvas
   ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.snapshot.paramMap.get('id')! ? this.intentId = this.activatedRoute.snapshot.paramMap.get('id')! : this.intentId = this.intentData;
+    this.activatedRoute.snapshot.paramMap.get('id')! ? this.intentId = this.activatedRoute.snapshot.paramMap.get('id')! : this.intentId = this.IntentId;
     console.log('Intent ID:', this.intentId);
     this.buildForm();
     this.loadIntent();
@@ -142,11 +144,17 @@ export class IntentDetails implements OnInit {
     this.dfService.updateIntent(updatedIntent).subscribe({
       next: () => {
         this.isSaving = false;
-        if (this.intentData) {
-          this.intentUpdated.emit('intentUpdated');
-          return;
+        // if (this.IntentId) {!!!commented out cause we are not using the modal now
+        //   this.intentUpdated.emit('intentUpdated');
+        //   return;
+        // }
+        if (this.IntentId) {
+          this.router.navigate(['/graph-view']);
+          this.activeOffCanvas.dismiss();
         }
-        this.intentData ? this.router.navigate(['/graph-view']) : this.router.navigate(['/intents']);
+        else {
+          this.router.navigate(['/intents']);
+        }
         Notiflix.Notify.success('Intent updated successfully!');
       },
       error: () => {
@@ -157,7 +165,7 @@ export class IntentDetails implements OnInit {
   }
 
   goBack(): void {
-    this.intentData ? this.dataDismissed.emit('dataDismissed') : window.history.back();
+    this.IntentId ? this.dataDismissed.emit('dataDismissed') : window.history.back();
   }
 
   deleteIntent(): void {
@@ -170,11 +178,11 @@ export class IntentDetails implements OnInit {
         const id = `projects/${this.dfService.projectDetails[0].projectId}/agent/intents/${this.intentId}`;
         this.dfService.deleteIntent(id).subscribe({
           next: () => {
-            if (this.intentData) {
+            if (this.IntentId) {
               this.intentDeleted.emit('intentDeleted');
               return;
             }
-            this.intentData ? this.router.navigate(['/graph-view']) : this.router.navigate(['/intents']);
+            this.IntentId ? this.router.navigate(['/graph-view']) : this.router.navigate(['/intents']);
             Notiflix.Notify.success('Intent deleted successfully!');
 
           },

@@ -18,6 +18,8 @@ export class IntentCreateModalComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.intentdata);
   }
-
+  onIntentCreated(intent: any) {
+    this.modal.close(intent);
+  }
 
 }

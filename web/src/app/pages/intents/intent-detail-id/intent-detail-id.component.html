@@ -1,0 +1,124 @@
+<!-- Header -->
+<div class="flex items-center justify-between px-4 py-3 md:px-6 md:py-4 border-b border-gray-200 bg-gray-50">
+    <div class="flex items-center space-x-2">
+        <span class="material-icons text-blue-600 text-lg">psychology</span>
+        <h5 class="text-sm md:text-base font-semibold text-gray-800 truncate max-w-[180px] md:max-w-none">
+            {{ intent?.displayName || 'Intent Details' }}
+        </h5>
+    </div>
+    <button class="p-1 rounded-full hover:bg-gray-200 transition" (click)="activeOffCanvas.dismiss()"
+        aria-label="Close">
+        <span class="material-icons text-gray-500 hover:text-gray-700 text-sm">close</span>
+    </button>
+</div>
+
+<!-- Body -->
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+<div class="p-3 md:p-4 space-y-4 md:space-y-6 text-gray-700 overflow-y-auto max-h-[calc(100vh-3.5rem)]">
+
+    <!-- Intent Description -->
+    <div class="bg-white p-3 md:p-4 rounded-lg border border-gray-100">
+        <div class="flex items-center space-x-2 mb-2">
+            <span class="material-icons text-gray-400 text-sm">description</span>
+            <label class="text-xs font-medium text-gray-500 uppercase tracking-wider">Description</label>
+        </div>
+        <p class="mt-1 text-xs text-gray-700 leading-snug">
+            {{ intent?.description || 'No description provided.' }}
+        </p>
+    </div>
+
+    <!-- Training Phrases -->
+    <div class="bg-white p-3 md:p-4 rounded-lg border border-gray-100">
+        <div class="flex items-center flex-wrap gap-2 mb-2">
+            <div class="flex items-center space-x-2">
+                <span class="material-icons text-gray-400 text-sm">format_quote</span>
+                <label class="text-xs font-medium text-gray-500 uppercase tracking-wider">Training Phrases</label>
+            </div>
+            <span class="ml-auto text-xxs bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded-full">
+                {{ intent?.trainingPhrases?.length || 0 }} phrases
+            </span>
+        </div>
+        <ul class="space-y-2">
+            <li *ngFor="let phrase of intent?.trainingPhrases" class="flex items-start">
+                <span class="material-icons text-green-500 text-xs mt-px mr-1">chevron_right</span>
+                <span class="text-xs text-gray-700 break-words">{{ phrase }}</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Responses -->
+    <div class="bg-white p-3 md:p-4 rounded-lg border border-gray-100">
+        <div class="flex items-center flex-wrap gap-2 mb-2">
+            <div class="flex items-center space-x-2">
+                <span class="material-icons text-gray-400 text-sm">chat_bubble</span>
+                <label class="text-xs font-medium text-gray-500 uppercase tracking-wider">Responses</label>
+            </div>
+            <span class="ml-auto text-xxs bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded-full">
+                {{ intent?.responses?.length || 0 }} responses
+            </span>
+        </div>
+        <ul class="space-y-2">
+            <li *ngFor="let response of intent?.responses" class="flex items-start">
+                <span class="material-icons text-blue-500 text-xs mt-px mr-1">chevron_right</span>
+                <span class="text-xs text-gray-700 break-words">{{ response }}</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Contexts -->
+    <!-- <div class="grid grid-cols-1 gap-3 md:gap-4 md:grid-cols-2">
+        <div class="bg-white p-3 md:p-4 rounded-lg border border-gray-100">
+            <div class="flex items-center flex-wrap gap-2 mb-2">
+                <div class="flex items-center space-x-2">
+                    <span class="material-icons text-gray-400 text-sm">input</span>
+                    <label class="text-xs font-medium text-gray-500 uppercase tracking-wider">Input Contexts</label>
+                </div>
+                <span class="ml-auto text-xxs bg-purple-100 text-purple-800 px-1.5 py-0.5 rounded-full">
+                    {{ intent?.inputContexts?.length || 0 }}
+                </span>
+            </div>
+            <ul class="space-y-1.5">
+                <li *ngFor="let ctx of intent?.inputContexts"
+                    class="text-xs text-gray-700 bg-gray-50 px-2 py-1.5 rounded">
+                    {{ ctx }}
+                </li>
+            </ul>
+        </div>
+        <div class="bg-white p-3 md:p-4 rounded-lg border border-gray-100">
+            <div class="flex items-center flex-wrap gap-2 mb-2">
+                <div class="flex items-center space-x-2">
+                    <span class="material-icons text-gray-400 text-sm">output</span>
+                    <label class="text-xs font-medium text-gray-500 uppercase tracking-wider">Output Contexts</label>
+                </div>
+                <span class="ml-auto text-xxs bg-purple-100 text-purple-800 px-1.5 py-0.5 rounded-full">
+                    {{ intent?.outputContexts?.length || 0 }}
+                </span>
+            </div>
+            <ul class="space-y-1.5">
+                <li *ngFor="let ctx of intent?.outputContexts"
+                    class="text-xs text-gray-700 bg-gray-50 px-2 py-1.5 rounded">
+                    {{ ctx }}
+                </li>
+            </ul>
+        </div> 
+    </div> -->
+
+    <!-- Action Buttons -->
+    <div class="pt-3 md:pt-4 border-t border-gray-200 flex justify-end gap-2">
+        <button
+            class="px-3 py-1.5 text-xs rounded border border-gray-300 text-gray-700 hover:bg-gray-50 transition flex items-center"
+            (click)="activeOffCanvas.dismiss()">
+            <span class="material-icons text-xs mr-1">close</span>
+            Cancel
+        </button>
+        <button
+            class="px-3 py-1.5 text-xs rounded bg-blue-600 text-white hover:bg-blue-700 transition flex items-center"
+            (click)="EditIntent(intent)">
+            <span class="material-icons text-xs mr-1">edit</span>
+            Edit
+        </button>
+    </div>
+</div>
