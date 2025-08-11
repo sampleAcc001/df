@@ -20,4 +20,13 @@ export class IntentCanvasComponent {
   onEditIntent(intent: any) {
     this.page = 'edit-intent';
   }
+  onIntentDeleted(event: any) {
+    this.activeOffCanvas.dismiss(event);
+    this.page = 'create-intent';
+  }
+
+  onIntentUpdated(event: any) {
+    this.activeOffCanvas.dismiss(event);
+    this.page = 'view-intent';
+  }
 }

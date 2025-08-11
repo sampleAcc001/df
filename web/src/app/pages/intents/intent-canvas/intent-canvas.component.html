@@ -2,7 +2,8 @@
 <app-intent-detail-id [intent]="intent" (onEditIntent)="onEditIntent($event)"></app-intent-detail-id>
 }
 @if(page === 'edit-intent'){
-<app-intent-details [IntentId]="intent.id" [FormGraph]="true"></app-intent-details>
+<app-intent-details [IntentId]="intent.id" [FormGraph]="true" (intentDeleted)="onIntentDeleted($event)"
+    (intentUpdated)="onIntentUpdated($event)"></app-intent-details>
 }
 @if(page === 'create-intent'){
 <app-create-intent-page [OpeningFromGraph]="true"></app-create-intent-page>

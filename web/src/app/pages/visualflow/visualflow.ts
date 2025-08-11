@@ -1,6 +1,6 @@
-import { Component, inject, Injector, OnInit } from '@angular/core';
+import { AfterViewInit, Component, inject, Injector, OnInit, viewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Vflow, NodeChange, Node, Edge, ConnectionSettings, Connection } from 'ngx-vflow';
+import { Vflow, NodeChange, Node, Edge, ConnectionSettings, Connection, VflowComponent } from 'ngx-vflow';
 import { FormBuilder, FormGroup, FormArray, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DialogFlowService } from '../../services/dialogflow.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -21,8 +21,10 @@ import { DialogflowIntent } from '../../../../interfaces/dialogFlowIntent.interf
 })
 export class VisualFlowComponent implements OnInit {
   lastUpdated!: string | number | Date;
+  protected vflow = viewChild.required(VflowComponent);
 
   constructor(private fb: FormBuilder, private dfService: DialogFlowService, private modalService: NgbModal, private offcanvasService: NgbOffcanvas) { }
+
 
   nodes: Node[] = [];
   edges: Edge[] = [
@@ -192,6 +194,7 @@ export class VisualFlowComponent implements OnInit {
       }
     }, (reason) => {
       console.log(`Dismissed ${reason}`);
+
     });
   }
 
@@ -240,9 +243,15 @@ export class VisualFlowComponent implements OnInit {
         });
 
         // Optionally handle close/dismiss events
-        this.offcanvasRef.result.finally(() => {
-          this.offcanvasRef = undefined;
-        });
+        this.offcanvasRef.result.
+          then((result) => {
+            console.log(`Closed with: ${result}`);
+          }).catch((reason) => {
+            console.log(`Dismissed ${reason}`);
+          }).finally(() => {
+            this.offcanvasRef = undefined;
+            this.LoadIntents();
+          })
       }
     }
   }
