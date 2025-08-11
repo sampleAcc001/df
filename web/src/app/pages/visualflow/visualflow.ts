@@ -186,7 +186,7 @@ export class VisualFlowComponent implements OnInit {
     }
     modalRef.result.then((result) => {
       console.log(`Closed with: ${result}`);
-      if (result === 'intentDeleted' || result === 'intentUpdated') {
+      if (result === 'intentDeleted' || result === 'intentUpdated' || result === 'intentCreated') {
         this.LoadIntents();
         this.createNodesFromIntents(result);
       }
