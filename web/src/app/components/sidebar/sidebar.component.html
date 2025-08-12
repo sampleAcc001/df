@@ -1,20 +1,12 @@
 <nav class="sidebar bg-white shadow-sm border-end d-flex flex-column">
-    <!-- Sidebar Header (optional) -->
-    <!-- <div class="sidebar-header p-3 border-bottom">
-        <h6 class="mb-0">Menu</h6>
-    </div> -->
-
-    <!-- Navigation Content -->
     <div class="sidebar-content flex-grow-1 overflow-auto py-3">
         <div class="nav-section">
             <button *ngFor="let navItem of mainNavItems"
-                class="nav-item w-100 d-flex align-items-center px-3 py-2 rounded-end transition"
+                class="nav-item w-100 d-flex align-items-center px-3 py-2 rounded-end border-0 bg-transparent text-start"
                 [class.active]="isActiveRoute(navItem.route)" [class.bg-primary-subtle]="isActiveRoute(navItem.route)"
-                [class.text-primary]="isActiveRoute(navItem.route)"
-                [class.text-secondary]="!isActiveRoute(navItem.route)" (click)="navigate(navItem.route)"
+                [class.text-primary]="isActiveRoute(navItem.route)" (click)="navigate(navItem.route)"
                 [attr.aria-current]="isActiveRoute(navItem.route) ? 'page' : null">
-
-                <i class="me-3" [class]="navItem.icon" [class.text-primary]="isActiveRoute(navItem.route)"></i>
+                <i [class]="navItem.icon" [class.text-primary]="isActiveRoute(navItem.route)"></i>
                 <span class="nav-text">{{ navItem.label }}</span>
             </button>
         </div>
