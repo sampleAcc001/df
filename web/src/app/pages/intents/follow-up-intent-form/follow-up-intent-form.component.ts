@@ -1,4 +1,3 @@
-import { Dialog } from '@angular/cdk/dialog';
 import { Component, Input, OnInit } from '@angular/core';
 import { DialogflowIntent } from '../../../../../interfaces/dialogFlowIntent.interface';
 
