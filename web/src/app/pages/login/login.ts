@@ -39,19 +39,35 @@ export class Login {
       <rect width="100%" height="100%" filter="url(#noise)" opacity="0.2"/>
     </svg>
   `);
+  showPassword: boolean = false;
+  isLoading: boolean = false;
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      rememberMe: [false]
     });
   }
 
+
   onSubmit() {
+    // if (this.loginForm.valid) {
+    //   this.isLoading = true;
+    //   // Simulate API call
+    //   setTimeout(() => {
+    //     console.log('Login form submitted', this.loginForm.value);
+    //     this.isLoading = false;
+    //   }, 1500);
+    // }
     this.router.navigate(['/agents']);
-    if (this.loginForm.valid) {
-      console.log('Authenticating:', this.loginForm.value);
-      // Add your authentication logic here
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+    const passwordField = document.querySelector('[formControlName="password"]') as HTMLInputElement;
+    if (passwordField) {
+      passwordField.type = this.showPassword ? 'text' : 'password';
     }
   }
 }

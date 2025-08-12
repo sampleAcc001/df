@@ -1,44 +1,126 @@
-<div class="d-flex align-items-center justify-content-center min-vh-100 bg-light">
-    <div class="card shadow-lg border-0 rounded-4" style="max-width: 350px; width: 100%;">
+<div class="d-flex align-items-center justify-content-center min-vh-100"
+    style="background: radial-gradient(circle at top center, #f0f2fa 0%, #ffffff 80%);">
+    <div class="card shadow-sm border-0 rounded-3"
+        style="max-width: 320px; width: 100%; padding: 1.5rem; box-shadow: 0 8px 24px rgba(79, 70, 229, 0.1);">
 
-        <!-- Header -->
-        <div class="card-header text-center bg-gradient position-relative rounded-top-4"
-            style="background: linear-gradient(90deg, #4f46e5, #3b82f6);">
-            <div class="bg-white p-2 rounded-circle shadow d-inline-block">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="currentColor"
-                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary">
+        <!-- Compact Header -->
+        <div class="text-center mb-3" style="user-select:none;">
+            <div
+                style="width: 48px; height: 48px; margin: 0 auto; background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="white"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                     <path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6
-                   a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+            a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                 </svg>
             </div>
-            <h5 class="mt-2 text-white fw-bold">Agent Console</h5>
+            <h5 class="mt-2 fw-bold mb-0" style="color: #4f46e5; font-size: 1.1rem;">Agent Login</h5>
+            <p class="text-muted small mt-1" style="font-size: 0.75rem;">Access your support dashboard</p>
         </div>
 
-        <!-- Form -->
-        <div class="card-body p-4">
-            <form (ngSubmit)="onSubmit()">
-                <!-- Email -->
-                <div class="mb-3">
-                    <label class="form-label small fw-semibold text-secondary">Email</label>
-                    <input type="email" class="form-control form-control-sm" placeholder="agent@company.com">
+        <!-- Compact Form -->
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <!-- Email -->
+            <div class="mb-2">
+                <label class="form-label small fw-medium" style="color: #4f46e5;">Email</label>
+                <input type="email" formControlName="email"
+                    class="form-control form-control-sm rounded-2 border-0 shadow-sm" placeholder="agent@company.com"
+                    style="background-color: #f9faff; font-size: 0.85rem;"
+                    [ngClass]="{'is-invalid': loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)}">
+                <div *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)"
+                    class="invalid-feedback d-block small" style="font-size: 0.7rem;">
+                    Valid email required
                 </div>
+            </div>
 
-                <!-- Password -->
-                <div class="mb-3">
-                    <label class="form-label small fw-semibold text-secondary">Password</label>
-                    <input type="password" class="form-control form-control-sm" placeholder="••••••••">
+            <!-- Password -->
+            <div class="mb-3">
+                <div class="d-flex justify-content-between">
+                    <label class="form-label small fw-medium" style="color: #4f46e5;">Password</label>
+                    <a href="#" class="text-decoration-none small"
+                        style="color: #3b82f6; font-size: 0.75rem;">Forgot?</a>
                 </div>
+                <div class="input-group">
+                    <input type="password" formControlName="password"
+                        class="form-control form-control-sm rounded-2 border-0 shadow-sm" placeholder="••••••••"
+                        style="background-color: #f9faff; font-size: 0.85rem;"
+                        [ngClass]="{'is-invalid': loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)}">
+                    <button type="button"
+                        class="btn btn-sm bg-transparent border-0 position-absolute end-0 top-50 translate-middle-y me-1"
+                        (click)="togglePasswordVisibility()" style="z-index: 5; padding: 0.15rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#6b7280"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+                            <path
+                                d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                        </svg>
+                    </button>
+                </div>
+                <div *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)"
+                    class="invalid-feedback d-block small" style="font-size: 0.7rem;">
+                    Min 6 characters
+                </div>
+            </div>
 
-                <!-- Sign In -->
-                <button type="submit" class="btn btn-primary w-100 py-2 fw-medium">
-                    Sign In
+            <!-- Remember Me -->
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="rememberMe" formControlName="rememberMe"
+                    style="width: 0.9rem; height: 0.9rem;">
+                <label class="form-check-label small" for="rememberMe" style="color: #4b5563; font-size: 0.8rem;">Keep
+                    me signed in</label>
+            </div>
+
+            <!-- Sign In Button -->
+            <!-- [disabled]="loginForm.invalid || isLoading" -->
+            <button type="submit" class="btn btn-gradient w-100 fw-medium py-1 rounded-2 mb-2"
+                [ngClass]="{'btn-loading': isLoading}" style="
+          background: linear-gradient(90deg, #4f46e5, #3b82f6);
+          border: none;
+          color: white;
+          font-size: 0.85rem;
+          box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+        ">
+                <span *ngIf="!isLoading">Sign In</span>
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status"
+                    aria-hidden="true"></span>
+            </button>
+
+            <!-- Social Login -->
+            <div class="text-center mb-2 position-relative">
+                <hr class="my-2" style="border-color: #e5e7eb;">
+                <span class="px-2 bg-white position-absolute top-50 start-50 translate-middle small"
+                    style="color: #6b7280; font-size: 0.7rem;">or</span>
+            </div>
+
+            <div class="d-flex gap-1 mb-3">
+                <button type="button"
+                    class="btn btn-outline-light flex-grow-1 py-1 rounded-2 d-flex align-items-center justify-content-center"
+                    style="border: 1px solid #e5e7eb; color: #4b5563; font-size: 0.75rem;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor"
+                        class="bi bi-google me-1" viewBox="0 0 16 16">
+                        <path
+                            d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
+                    </svg>
+                    Google
                 </button>
+                <button type="button"
+                    class="btn btn-outline-light flex-grow-1 py-1 rounded-2 d-flex align-items-center justify-content-center"
+                    style="border: 1px solid #e5e7eb; color: #4b5563; font-size: 0.75rem;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor"
+                        class="bi bi-microsoft me-1" viewBox="0 0 16 16">
+                        <path
+                            d="M7.462 0H0v7.19h7.462V0zM16 0H8.538v7.19H16V0zM7.462 8.211H0V16h7.462V8.211zm8.538 0H8.538V16H16V8.211z" />
+                    </svg>
+                    Microsoft
+                </button>
+            </div>
 
-                <!-- Forgot Password -->
-                <div class="text-center mt-2">
-                    <a href="#" class="small text-primary text-decoration-none">Forgot password?</a>
-                </div>
-            </form>
-        </div>
+            <!-- Sign Up Link -->
+            <div class="text-center" style="font-size: 0.75rem;">
+                <span style="color: #6b7280;">New agent?</span>
+                <a routerLink="/register" class="text-decoration-none ms-1"
+                    style="color: #3b82f6; font-weight: 500;">Create account</a>
+            </div>
+        </form>
     </div>
 </div>
