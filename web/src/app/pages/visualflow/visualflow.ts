@@ -3,19 +3,19 @@ import { CommonModule } from '@angular/common';
 import { Vflow, NodeChange, Node, Edge, ConnectionSettings, Connection, VflowComponent } from 'ngx-vflow';
 import { FormBuilder, FormGroup, FormArray, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DialogFlowService } from '../../services/dialogflow.service';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import Notiflix from 'notiflix';
 import { NgbModal, NgbOffcanvas, NgbOffcanvasRef } from '@ng-bootstrap/ng-bootstrap';
 import { IntentDetailModalComponent } from '../intents/intent-detail-modal/intent-detail-modal.component';
 import { IntentCreateModalComponent } from '../create-intent/intent-create-modal/intent-create-modal.component';
 import { IntentCanvasComponent } from '../intents/intent-canvas/intent-canvas.component';
 import { DialogflowIntent } from '../../../../interfaces/dialogFlowIntent.interface';
+import { ChatWidgetComponent } from "../../components/chat-widget/chat-widget";
 
 
 @Component({
   selector: 'app-visualflow',
   standalone: true,
-  imports: [CommonModule, FormsModule, Vflow, ReactiveFormsModule, MatDialogModule],
+  imports: [CommonModule, FormsModule, Vflow, ReactiveFormsModule, ChatWidgetComponent],
   templateUrl: './visualflow.html',
   styleUrl: './visualflow.css'
 })
@@ -52,7 +52,6 @@ export class VisualFlowComponent implements OnInit {
 
   backgroundColor = '#000';
 
-  readonly dialog = inject(MatDialog);
   ngOnInit(): void {
     this.LoadIntents();
   }

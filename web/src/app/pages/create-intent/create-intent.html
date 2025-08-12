@@ -1,92 +1,102 @@
-<div class="page-container">
-    <div class="page-header">
-        <div class="header-nav">
-            <button class="back-btn" (click)="goBack()">
-                <span class="material-icons">arrow_back</span>
-            </button>
-            <div class="header-content">
-                <h1 class="page-title">Create Intent</h1>
-                <p class="page-subtitle">Define a new intent for your agent</p>
-            </div>
+<div class="container my-4">
+    <!-- Page Header -->
+    <div class="d-flex align-items-center mb-4">
+        <button class="btn btn-outline-secondary me-3" (click)="goBack()">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <div>
+            <h1 class="h3 mb-0">Create Intent</h1>
+            <small class="text-muted">Define a new intent for your agent</small>
         </div>
     </div>
 
-    <div class="content-wrapper">
-        <div class="form-container">
-            <form [formGroup]="intentForm" (ngSubmit)="createIntent()" class="intent-form">
-                <div class="form-section">
-                    <h2 class="section-title">Intent Details</h2>
-
-                    <div class="form-group">
-                        <label for="intentName">Intent Name</label>
-                        <input id="intentName" type="text" class="form-control" formControlName="name"
-                            placeholder="Enter intent name" />
+    <div class="row">
+        <!-- Form Column -->
+        <div class="col-lg-8">
+            <form [formGroup]="intentForm" (ngSubmit)="createIntent()">
+                <!-- Intent Details -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Intent Details</h5>
                     </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="intentName" class="form-label">Intent Name</label>
+                            <input id="intentName" type="text" class="form-control" formControlName="name"
+                                placeholder="Enter intent name" />
+                        </div>
 
-                    <div class="form-group">
-                        <label for="intentDescription">Description</label>
-                        <textarea id="intentDescription" class="form-control" formControlName="description" rows="2"
-                            placeholder="Enter intent description"></textarea>
+                        <div class="mb-3">
+                            <label for="intentDescription" class="form-label">Description</label>
+                            <textarea id="intentDescription" class="form-control" rows="2" formControlName="description"
+                                placeholder="Enter intent description"></textarea>
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-section">
-                    <h2 class="section-title">Training Phrases</h2>
-
-                    <div formArrayName="trainingPhrases" class="response-list">
-                        <div class="response-item" *ngFor="let phrase of trainingPhrases.controls; let i = index"
+                <!-- Training Phrases -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Training Phrases</h5>
+                    </div>
+                    <div class="card-body" formArrayName="trainingPhrases">
+                        <div class="mb-2 d-flex" *ngFor="let phrase of trainingPhrases.controls; let i = index"
                             [formGroupName]="i">
-                            <input type="text" class="response-input" formControlName="text"
+                            <input type="text" class="form-control me-2" formControlName="text"
                                 placeholder="Type a user phrase" required />
-                            <button type="button" class="remove-btn" (click)="removeTrainingPhrase(i)">
-                                <span class="material-icons">remove_circle_outline</span>
+                            <button type="button" class="btn btn-outline-danger" (click)="removeTrainingPhrase(i)">
+                                <i class="fa fa-minus-circle"></i>
                             </button>
                         </div>
-                    </div>
 
-                    <button type="button" class="add-response-btn" (click)="addTrainingPhrase()">
-                        <span class="material-icons">add</span>
-                        Add Phrase
-                    </button>
+                        <button type="button" class="btn btn-outline-primary mt-2" (click)="addTrainingPhrase()">
+                            <i class="fa fa-plus me-1"></i> Add Phrase
+                        </button>
+                    </div>
                 </div>
 
-                <div class="form-section">
-                    <h2 class="section-title">Responses</h2>
-                    <div formArrayName="responses" class="response-list">
-                        <div class="response-item" *ngFor="let response of responses.controls; let i = index"
+                <!-- Responses -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Responses</h5>
+                    </div>
+                    <div class="card-body" formArrayName="responses">
+                        <div class="mb-2 d-flex" *ngFor="let response of responses.controls; let i = index"
                             [formGroupName]="i">
-                            <input type="text" class="response-input" formControlName="text"
+                            <input type="text" class="form-control me-2" formControlName="text"
                                 placeholder="Enter bot response" required />
-                            <button type="button" class="remove-btn" (click)="removeResponse(i)">
-                                <span class="material-icons">remove_circle_outline</span>
+                            <button type="button" class="btn btn-outline-danger" (click)="removeResponse(i)">
+                                <i class="fa fa-minus-circle"></i>
                             </button>
                         </div>
-                    </div>
 
-                    <button type="button" class="add-response-btn" (click)="addResponse()">
-                        <span class="material-icons">add</span>
-                        Add Response
-                    </button>
+                        <button type="button" class="btn btn-outline-primary mt-2" (click)="addResponse()">
+                            <i class="fa fa-plus me-1"></i> Add Response
+                        </button>
+                    </div>
                 </div>
 
-
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary" [disabled]="isSaving">Create Intent</button>
-                    <button type="button" class="btn btn-secondary" (click)="goBack()">Cancel</button>
+                <!-- Actions -->
+                <div class="mb-4">
+                    <button type="submit" class="btn btn-primary me-2" [disabled]="isSaving">
+                        Create Intent
+                    </button>
+                    <button type="button" class="btn btn-secondary" (click)="goBack()">
+                        Cancel
+                    </button>
                 </div>
             </form>
-
         </div>
 
-        @if(!OpeningFromGraph){
-        <div class="info-panel">
-            <div class="info-card">
-                <div class="info-header">
-                    <span class="material-icons">lightbulb</span>
-                    <h3>Tips</h3>
+        <!-- Info Panel -->
+        <div class="col-lg-4" *ngIf="!OpeningFromGraph">
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center">
+                    <i class="fa fa-lightbulb me-2 text-warning"></i>
+                    <h5 class="mb-0">Tips</h5>
                 </div>
-                <div class="info-content">
-                    <ul>
+                <div class="card-body">
+                    <ul class="mb-0">
                         <li>Add multiple variations of user phrases</li>
                         <li>Use simple, natural language</li>
                         <li>Keep responses short and informative</li>
@@ -94,20 +104,19 @@
                 </div>
             </div>
 
-            <div class="info-card">
-                <div class="info-header">
-                    <span class="material-icons">help_outline</span>
-                    <h3>Need Help?</h3>
+            <div class="card">
+                <div class="card-header d-flex align-items-center">
+                    <i class="fa fa-question-circle me-2 text-primary"></i>
+                    <h5 class="mb-0">Need Help?</h5>
                 </div>
-                <div class="info-content">
-                    <ul>
-                        <li><a href="#" class="info-link">Intent Design Guide</a></li>
-                        <li><a href="#" class="info-link">Training Tips</a></li>
-                        <li><a href="#" class="info-link">Dialogflow Docs</a></li>
+                <div class="card-body">
+                    <ul class="mb-0">
+                        <li><a href="#" class="text-decoration-none">Intent Design Guide</a></li>
+                        <li><a href="#" class="text-decoration-none">Training Tips</a></li>
+                        <li><a href="#" class="text-decoration-none">Dialogflow Docs</a></li>
                     </ul>
                 </div>
             </div>
         </div>
-        }
     </div>
 </div>

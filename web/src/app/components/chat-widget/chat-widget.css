@@ -1,9 +1,14 @@
-/* Hide scrollbar in chat messages */
-::-webkit-scrollbar {
-    width: 6px;
+.chat-window {
+    transform: translateX(0);
+    transition: transform 0.3s ease-in-out;
 }
 
-::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
+.chat-window.closed {
+    transform: translateX(100%);
+}
+
+/* Optional: Make sure bubbles wrap correctly */
+.chat-window .bg-primary,
+.chat-window .bg-success {
+    word-break: break-word;
 }

@@ -24,12 +24,24 @@ export class SidebarComponent implements OnInit {
   }
 
 
+  // mainNavItems = [
+  //   { route: '/agents', icon: 'smart_toy', label: 'Agents' },
+  //   { route: '/intents', icon: 'psychology', label: 'Intents' },
+  //   { route: '/intents', icon: 'category', label: 'Entities' },
+  //   { route: '/graph-view', icon: 'insights', label: 'Analytics' },
+  // ];
+
   mainNavItems = [
-    { route: '/agents', icon: 'smart_toy', label: 'Agents' },
-    { route: '/intents', icon: 'psychology', label: 'Intents' },
-    { route: '/entities', icon: 'category', label: 'Entities' },
-    { route: '/graph-view', icon: 'insights', label: 'Analytics' },
+    { route: '/agents', label: 'Agents', icon: 'fa-solid fa-robot' },          // Represents AI agent/bots
+    { route: '/intents', label: 'Intents', icon: 'fa-solid fa-comments' },     // Conversation/dialog related
+    { route: '/entities', label: 'Entities', icon: 'fa-solid fa-database' },   // Data/structured info
+    { route: '/graph-view', label: 'Flow', icon: 'fa-solid fa-diagram-project' }, // Visual flow view
+    { route: '/settings', label: 'Settings', icon: 'fa-solid fa-gear' },       // General configuration
+    { route: '/help', label: 'Help', icon: 'fa-solid fa-circle-question' }     // Help/Documentation
   ];
+
+
+
   activeButton: string | null = null;
 
   setActiveButton(button: string) {

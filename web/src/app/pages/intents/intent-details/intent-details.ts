@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Optional, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DialogFlowService } from '../../../services/dialogflow.service';
@@ -7,7 +7,7 @@ import Notiflix from 'notiflix';
 import { ChatWidgetComponent } from "../../../components/chat-widget/chat-widget";
 import { CommonService } from '../../../services/common.service';
 import { FollowUpIntentFormComponent } from '../follow-up-intent-form/follow-up-intent-form.component';
-import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveOffcanvas, NgbOffcanvasModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-intent-details',
@@ -15,7 +15,7 @@ import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./intent-details.css'],
   imports: [
     CommonModule, FormsModule, ReactiveFormsModule,
-    ChatWidgetComponent
+    NgbOffcanvasModule
   ],
   standalone: true
 })
@@ -35,7 +35,7 @@ export class IntentDetails implements OnInit {
     private router: Router,
     private dfService: DialogFlowService,
     private commonService: CommonService,
-    public activeOffCanvas: NgbActiveOffcanvas
+    @Optional() public activeOffCanvas: NgbActiveOffcanvas
   ) { }
 
   ngOnInit(): void {

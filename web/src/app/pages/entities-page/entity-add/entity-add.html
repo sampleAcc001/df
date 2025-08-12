@@ -1,117 +1,104 @@
-<div class="max-w-4xl mx-auto p-8 bg-white rounded-xl shadow-sm border border-gray-100 mt-10">
-    <h2 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
-        <span class="material-icons text-blue-600">category</span>
-        Create Entity
-    </h2>
+<div class="container mt-5">
+    <div class="card shadow-sm border-light">
+        <div class="card-body">
+            <h2 class="h4 mb-4 d-flex align-items-center gap-2">
+                <span class="material-icons text-primary">category</span>
+                Create Entity
+            </h2>
 
-    <form [formGroup]="entityForm" (ngSubmit)="onSubmit()" class="space-y-6">
+            <form [formGroup]="entityForm" (ngSubmit)="onSubmit()">
 
-        <!-- Name -->
-        <div class="space-y-1">
-            <label class="block text-sm font-medium text-gray-700">Entity Name <span
-                    class="text-red-500">*</span></label>
-            <input formControlName="name" type="text" placeholder="E.g. colors, payment_methods"
-                class="w-full border border-gray-300 rounded-md px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                required />
-            <p *ngIf="entityForm.get('name')?.invalid && (entityForm.get('name')?.dirty || entityForm.get('name')?.touched)"
-                class="text-xs text-red-500 mt-1">
-                Entity name is required
-            </p>
-        </div>
-
-        <!-- Description -->
-        <div class="space-y-1">
-            <label class="block text-sm font-medium text-gray-700">Description</label>
-            <textarea formControlName="description" rows="3"
-                class="w-full border border-gray-300 rounded-md px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                placeholder="Describe this entity's purpose (optional)"></textarea>
-        </div>
-
-        <!-- Entity Type -->
-        <div class="space-y-1">
-            <label class="block text-sm font-medium text-gray-700">Entity Type <span
-                    class="text-red-500">*</span></label>
-            <select formControlName="type"
-                class="w-full border border-gray-300 rounded-md px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white">
-                <option value="" disabled selected>Select entity type</option>
-                <option value="Map">Map</option>
-                <option value="List">List</option>
-                <option value="Regexp">Regular Expression (Regexp)</option>
-            </select>
-        </div>
-
-        <!-- Entries Section -->
-        <div class="space-y-4">
-            <div class="flex items-center justify-between">
-                <label class="block text-sm font-medium text-gray-700">Entries <span
-                        class="text-red-500">*</span></label>
-                <button type="button" (click)="addEntry()"
-                    class="flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800 font-medium">
-                    <span class="material-icons text-base">add</span>
-                    Add Entry
-                </button>
-            </div>
-
-            <div formArrayName="entries" class="space-y-4">
-                <div *ngFor="let entry of entries.controls; let i = index" [formGroupName]="i"
-                    class="border border-gray-200 p-5 rounded-lg bg-gray-50/50 hover:bg-gray-50 transition relative">
-
-                    <!-- Delete Entry Button -->
-                    <button type="button" (click)="removeEntry(i)"
-                        class="absolute top-3 right-3 text-gray-400 hover:text-red-500 transition" title="Remove entry">
-                        <span class="material-icons text-lg">close</span>
-                    </button>
-
-                    <!-- Entry Value -->
-                    <div class="mb-4 space-y-1">
-                        <label class="text-sm font-medium text-gray-700">Value <span
-                                class="text-red-500">*</span></label>
-                        <input formControlName="value" type="text"
-                            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                            placeholder="Primary value" required />
-                    </div>
-
-                    <!-- Synonyms -->
-                    <div formArrayName="synonyms" class="space-y-2">
-                        <div class="flex items-center justify-between">
-                            <label class="text-sm font-medium text-gray-700">Synonyms</label>
-                            <button type="button" (click)="addSynonym(i)"
-                                class="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800">
-                                <span class="material-icons text-sm">add</span>
-                                Add Synonym
-                            </button>
-                        </div>
-
-                        <div *ngFor="let synonym of getSynonyms(entry).controls; let j = index"
-                            class="flex items-center gap-2">
-                            <input [formControl]="synonym" type="text"
-                                class="flex-1 border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                                placeholder="Alternative phrase" />
-                            <button type="button" (click)="removeSynonym(i, j)"
-                                class="text-gray-400 hover:text-red-500 transition" title="Remove synonym">
-                                <span class="material-icons text-sm">remove_circle</span>
-                            </button>
-                        </div>
+                <!-- Name -->
+                <div class="mb-3">
+                    <label class="form-label">Entity Name <span class="text-danger">*</span></label>
+                    <input formControlName="name" type="text" class="form-control"
+                        placeholder="E.g. colors, payment_methods" required />
+                    <div *ngIf="entityForm.get('name')?.invalid && (entityForm.get('name')?.dirty || entityForm.get('name')?.touched)"
+                        class="form-text text-danger">
+                        Entity name is required
                     </div>
                 </div>
-            </div>
 
-            <p *ngIf="entries.length === 0" class="text-sm text-gray-500 italic">
-                No entries added yet. Entities require at least one entry.
-            </p>
-        </div>
+                <!-- Description -->
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea formControlName="description" rows="3" class="form-control"
+                        placeholder="Describe this entity's purpose (optional)"></textarea>
+                </div>
 
-        <!-- Form Actions -->
-        <div class="flex justify-end gap-3 pt-6 border-t border-gray-200">
-            <button type="button" (click)="cancel()"
-                class="px-5 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
-                Cancel
-            </button>
-            <button type="submit" [disabled]="entityForm.invalid"
-                class="px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition flex items-center gap-1">
-                <span class="material-icons text-sm">save</span>
-                Save Entity
-            </button>
+                <!-- Entity Type -->
+                <div class="mb-3">
+                    <label class="form-label">Entity Type <span class="text-danger">*</span></label>
+                    <select formControlName="type" class="form-select">
+                        <option value="" disabled selected>Select entity type</option>
+                        <option value="Map">Map</option>
+                        <option value="List">List</option>
+                        <option value="Regexp">Regular Expression (Regexp)</option>
+                    </select>
+                </div>
+
+                <!-- Entries Section -->
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <label class="form-label mb-0">Entries <span class="text-danger">*</span></label>
+                        <button type="button" (click)="addEntry()" class="btn btn-link btn-sm text-primary p-0">
+                            <span class="material-icons align-middle">add</span> Add Entry
+                        </button>
+                    </div>
+
+                    <div formArrayName="entries" class="d-flex flex-column gap-3">
+                        <div *ngFor="let entry of entries.controls; let i = index" [formGroupName]="i"
+                            class="border rounded p-3 bg-light position-relative">
+
+                            <!-- Delete Entry Button -->
+                            <button type="button" (click)="removeEntry(i)"
+                                class="btn btn-sm btn-light position-absolute top-0 end-0 m-2 text-muted">
+                                <span class="material-icons">close</span>
+                            </button>
+
+                            <!-- Entry Value -->
+                            <div class="mb-3">
+                                <label class="form-label">Value <span class="text-danger">*</span></label>
+                                <input formControlName="value" type="text" class="form-control"
+                                    placeholder="Primary value" required />
+                            </div>
+
+                            <!-- Synonyms -->
+                            <div formArrayName="synonyms">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <label class="form-label mb-0">Synonyms</label>
+                                    <button type="button" (click)="addSynonym(i)" class="btn btn-link btn-sm p-0">
+                                        <span class="material-icons align-middle">add</span> Add Synonym
+                                    </button>
+                                </div>
+
+                                <div *ngFor="let synonym of getSynonyms(entry).controls; let j = index"
+                                    class="input-group mb-2">
+                                    <input [formControl]="synonym" type="text" class="form-control"
+                                        placeholder="Alternative phrase" />
+                                    <button type="button" (click)="removeSynonym(i, j)" class="btn btn-outline-danger">
+                                        <span class="material-icons">remove_circle</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <small *ngIf="entries.length === 0" class="text-muted fst-italic">
+                        No entries added yet. Entities require at least one entry.
+                    </small>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="d-flex justify-content-end gap-2 border-top pt-3">
+                    <button type="button" (click)="cancel()" class="btn btn-outline-secondary">Cancel</button>
+                    <button type="submit" [disabled]="entityForm.invalid"
+                        class="btn btn-primary d-flex align-items-center gap-1">
+                        <span class="material-icons">save</span> Save Entity
+                    </button>
+                </div>
+
+            </form>
         </div>
-    </form>
+    </div>
 </div>

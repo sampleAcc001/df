@@ -1,0 +1,8 @@
+.bg-gradient {
+    background: linear-gradient(90deg, #4f46e5, #3b82f6);
+}
+
+.rounded-top-4 {
+    border-top-left-radius: 1rem !important;
+    border-top-right-radius: 1rem !important;
+}

@@ -3,16 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 
-// Angular Material Modules
-import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
-import { MatSortModule } from '@angular/material/sort';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatTooltipModule } from '@angular/material/tooltip';
+
 
 import { DialogflowIntent } from '../../../../interfaces/dialogFlowIntent.interface';
 import { DialogFlowService } from '../../services/dialogflow.service';
@@ -25,15 +16,6 @@ import Notiflix from 'notiflix';
   imports: [
     CommonModule,
     FormsModule,
-    MatCardModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatIconModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatTooltipModule,
     RouterLink,
     RouterModule,
   ],

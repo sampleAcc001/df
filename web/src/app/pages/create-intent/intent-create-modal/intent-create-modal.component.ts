@@ -21,5 +21,8 @@ export class IntentCreateModalComponent implements OnInit {
   onIntentCreated(intent: any) {
     this.modal.close(intent);
   }
+  closeModal() {
+    this.modal.dismiss();
+  }
 
 }

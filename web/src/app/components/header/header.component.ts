@@ -7,135 +7,43 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <header class="header">
-      <div class="header-left">
-        <div class="logo-container" (click)="navigateToHome()">
-          <span class="material-icons logo-icon">chat</span>
-          <span class="logo-text">Dialogflow</span>
-        </div>
-        <!-- <div class="breadcrumb">
-          <span class="breadcrumb-item">Console</span>
-        </div> -->
-      </div>
-      
-      <div class="header-right">
-        <button class="header-btn" title="Help">
-          <span class="material-icons">help_outline</span>
-        </button>
-        <button class="header-btn" title="Settings">
-          <span class="material-icons">settings</span>
-        </button>
-        <button class="header-btn" title="Notifications">
-          <span class="material-icons">notifications</span>
-        </button>
-        <div class="user-avatar">
-          <span class="material-icons">account_circle</span>
-        </div>
-      </div>
-    </header>
+   <header class="d-flex align-items-center justify-content-between px-4 border-bottom shadow-sm bg-white" style="height: 64px;">
+
+  <!-- Left Section -->
+  <div class="d-flex align-items-center gap-3">
+    <div class="d-flex align-items-center gap-2 logo-container" (click)="navigateToHome()">
+      <i class="fa-solid fa-comments text-primary fs-3"></i>
+      <span class="fs-5 fw-normal text-secondary">Dialogflow</span>
+    </div>
+  </div>
+
+  <!-- Right Section -->
+  <div class="d-flex align-items-center gap-2">
+    <button class="btn btn-light btn-sm rounded-circle" title="Help">
+      <i class="fa-regular fa-circle-question"></i>
+    </button>
+    <button class="btn btn-light btn-sm rounded-circle" title="Settings">
+      <i class="fa-solid fa-gear"></i>
+    </button>
+    <button class="btn btn-light btn-sm rounded-circle" title="Notifications">
+      <i class="fa-regular fa-bell"></i>
+    </button>
+    <div class="ms-2 text-secondary fs-3" role="button">
+      <i class="fa-solid fa-circle-user"></i>
+    </div>
+  </div>
+</header>
+
   `,
   styles: [`
-    .header {
-      background: white;
-      border-bottom: 1px solid #dadce0;
-      padding: 0 24px;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    }
-
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-    }
-
     .logo-container {
-      display: flex;
-      align-items: center;
-      gap: 8px;
       cursor: pointer;
-      padding: 8px;
+      padding: 6px 8px;
       border-radius: 4px;
       transition: background-color 0.2s ease;
     }
-
     .logo-container:hover {
       background-color: #f8f9fa;
-    }
-
-    .logo-icon {
-      color: #1976d2;
-      font-size: 28px;
-    }
-
-    .logo-text {
-      font-size: 20px;
-      font-weight: 400;
-      color: #5f6368;
-    }
-
-    .breadcrumb {
-      display: flex;
-      align-items: center;
-    }
-
-    .breadcrumb-item {
-      color: #5f6368;
-      font-size: 14px;
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .header-btn {
-      background: none;
-      border: none;
-      padding: 8px;
-      border-radius: 50%;
-      cursor: pointer;
-      color: #5f6368;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background-color 0.2s ease;
-    }
-
-    .header-btn:hover {
-      background-color: #f8f9fa;
-    }
-
-    .user-avatar {
-      margin-left: 8px;
-      color: #5f6368;
-      cursor: pointer;
-    }
-
-    .user-avatar .material-icons {
-      font-size: 32px;
-    }
-
-    @media (max-width: 768px) {
-      .header {
-        padding: 0 16px;
-      }
-      
-      .breadcrumb {
-        display: none;
-      }
-      
-      .header-btn {
-        display: none;
-      }
-      
-      .header-btn:last-of-type {
-        display: flex;
-      }
     }
   `]
 })

@@ -1,46 +1,42 @@
 <!-- Floating Button -->
-<button ngbTooltip="Test Agent"
-    class="fixed bottom-6 right-6 z-50 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition"
-    (click)="toggleChat()" *ngIf="!isOpen">
-    <span class="material-icons">chat</span>
+<button ngbTooltip="Test Agent" class="btn btn-primary position-fixed bottom-0 end-0 m-4 rounded-circle shadow"
+    style="width: 56px; height: 56px; padding: 0;" (click)="toggleChat()" *ngIf="!isOpen">
+    <i class="fa-regular fa-envelope m-auto h5"></i>
 </button>
 
 <!-- Chat Window -->
-<div class="fixed top-0 right-0 h-full w-full sm:w-[400px] lg:w-[450px] xl:w-[500px] bg-white shadow-lg z-50 flex flex-col transition-transform duration-300 max-h-screen"
-    [class.translate-x-full]="!isOpen">
+<div class="chat-window position-fixed top-0 end-0 h-100 bg-white shadow-lg zindex-tooltip d-flex flex-column"
+    style="width: 100%; max-width: 500px; max-height: 100vh;" [class.closed]="!isOpen">
 
     <!-- Header -->
-    <div class="flex items-center justify-between p-4 border-b bg-blue-600 text-white">
-        <h2 class="text-lg font-semibold">{{AgentInfo.displayName || 'Agent'}}</h2>
-        <button (click)="toggleChat()" class="text-white hover:text-gray-200">
-            <span class="material-icons">close</span>
+    <div class="d-flex align-items-center justify-content-between p-3 border-bottom bg-primary text-white">
+        <h2 class="fs-5 fw-semibold mb-0">{{AgentInfo.displayName || 'Agent'}}</h2>
+        <button (click)="toggleChat()" class="btn btn-link text-white p-0">
+            <i class="fa-regular fa-circle-xmark"></i>
         </button>
     </div>
 
     <!-- Messages -->
-    <div #messageContainer class="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50"
-        style="max-height: calc(100vh - 150px);">
-        <div *ngFor="let msg of messages" [ngClass]="{
-      'text-left': msg.sender === 'bot',
-      'text-right': msg.sender === 'user'
-    }">
+    <div #messageContainer class="flex-grow-1 overflow-auto p-3 bg-light" style="max-height: calc(100vh - 150px);">
+        <div *ngFor="let msg of messages" class="d-flex mb-2" [ngClass]="{
+                'justify-content-start': msg.sender === 'bot',
+                'justify-content-end': msg.sender === 'user'
+            }">
             <div [ngClass]="{
-        'bg-blue-100 text-blue-800': msg.sender === 'bot',
-        'bg-green-100 text-green-800': msg.sender === 'user'
-      }" class="inline-block px-4 py-2 rounded-lg max-w-[80%]">
+                'bg-primary bg-opacity-10 text-primary': msg.sender === 'bot',
+                'bg-success bg-opacity-10 text-success': msg.sender === 'user'
+            }" class="px-3 py-2 rounded" style="max-width: 80%;">
                 {{ msg.text }}
             </div>
         </div>
     </div>
 
     <!-- Input -->
-    <div class="p-4 border-t bg-white">
-        <div class="flex items-center gap-2">
+    <div class="p-3 border-top bg-white">
+        <div class="d-flex gap-2">
             <input [(ngModel)]="newMessage" (keydown.enter)="sendMessage()" type="text"
-                placeholder="Type your message..."
-                class="flex-1 border rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            <button (click)="sendMessage()"
-                class="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition">
+                placeholder="Type your message..." class="form-control rounded-pill" />
+            <button (click)="sendMessage()" class="btn btn-primary rounded-pill">
                 Send
             </button>
         </div>

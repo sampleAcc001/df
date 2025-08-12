@@ -1,28 +1,22 @@
-<nav class="sidebar bg-white shadow-sm  h-full flex flex-col border-r border-gray-100">
-    <!-- Sidebar Header -->
+<nav class="sidebar bg-white shadow-sm border-end d-flex flex-column">
+    <!-- Sidebar Header (optional) -->
+    <!-- <div class="sidebar-header p-3 border-bottom">
+        <h6 class="mb-0">Menu</h6>
+    </div> -->
 
     <!-- Navigation Content -->
-    <div class="sidebar-content flex-1 overflow-y-auto  space-y-6">
-        <!-- Main Navigation Section -->
-        <div class="nav-section space-y-1">
-            <!-- <div class="section-title px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                Conversation
-            </div> -->
-
+    <div class="sidebar-content flex-grow-1 overflow-auto py-3">
+        <div class="nav-section">
             <button *ngFor="let navItem of mainNavItems"
-                class="nav-item w-full flex items-center px-3 py-2 text-sm rounded-md transition-colors"
-                [class.active]="isActiveRoute(navItem.route)" [class.bg-blue-50]="isActiveRoute(navItem.route)"
-                [class.text-blue-600]="isActiveRoute(navItem.route)"
-                [class.text-gray-700]="!isActiveRoute(navItem.route)" (click)="navigate(navItem.route)"
+                class="nav-item w-100 d-flex align-items-center px-3 py-2 rounded-end transition"
+                [class.active]="isActiveRoute(navItem.route)" [class.bg-primary-subtle]="isActiveRoute(navItem.route)"
+                [class.text-primary]="isActiveRoute(navItem.route)"
+                [class.text-secondary]="!isActiveRoute(navItem.route)" (click)="navigate(navItem.route)"
                 [attr.aria-current]="isActiveRoute(navItem.route) ? 'page' : null">
-                <span class="material-icons mr-3 text-lg" [class.text-blue-500]="isActiveRoute(navItem.route)">
-                    {{ navItem.icon }}
-                </span>
-                <!-- <span class="nav-text">{{ navItem.label }}</span> -->
+
+                <i class="me-3" [class]="navItem.icon" [class.text-primary]="isActiveRoute(navItem.route)"></i>
+                <span class="nav-text">{{ navItem.label }}</span>
             </button>
         </div>
-
-
     </div>
-
 </nav>

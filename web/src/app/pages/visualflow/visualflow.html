@@ -1,64 +1,53 @@
-<div class="flex flex-col min-h-screen bg-gray-50">
+<div class="d-flex flex-column min-vh-100 bg-light">
     <!-- Header Section -->
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 px-6 py-4">
-        <div class="flex items-center gap-3">
-            <span class="material-icons text-blue-600">account_tree</span>
+    <div
+        class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3 px-4 py-3 border-bottom bg-white shadow-sm">
+        <div class="d-flex align-items-center gap-2">
+            <span class="material-icons text-primary fs-3">account_tree</span>
             <div>
-                <h2 class="text-xl font-semibold text-gray-800">Intent Flow Visualization</h2>
-                <p class="text-sm text-gray-500 mt-1">
+                <h2 class="h5 fw-semibold text-dark mb-1">Intent Flow Visualization</h2>
+                <p class="small text-muted mb-0">
                     Interactive map of your dialog flow. Select any intent to view details.
                 </p>
             </div>
         </div>
-        <div class="flex gap-3">
-            <!-- <button
-                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                (click)="resetView()">
-                <span class="material-icons text-sm">refresh</span>
-                Reset View
-            </button> -->
-            <button
-                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                (click)="addIntent()">
-                <span class="material-icons text-sm">add</span>
+        <div class="d-flex gap-2">
+            <button type="button" class="btn btn-primary d-flex align-items-center gap-1" (click)="addIntent()">
+                <span class="material-icons fs-6">add</span>
                 Create Intent
             </button>
         </div>
     </div>
 
     <!-- Main Content Area -->
-    <!-- Status Bar -->
-
-    <div class="flex-1 p-6">
-        <!-- Visualization Container -->
-        <div class="flex justify-between items-center text-xs text-gray-500 mt-3 mb-3">
-            <div class="flex items-center">
-                <span class="material-icons align-middle text-xs mr-1">schema</span>
+    <div class="flex-grow-1 p-4">
+        <!-- Status Bar -->
+        <div class="d-flex justify-content-between align-items-center text-muted small mb-3">
+            <div class="d-flex align-items-center">
+                <span class="material-icons me-1 fs-6">schema</span>
                 Showing {{ nodes.length }} intents and {{ edges.length }} connections
             </div>
-            <div class="flex items-center">
-                <span class="material-icons align-middle text-xs mr-1">touch_app</span>
+            <div class="d-flex align-items-center">
+                <span class="material-icons me-1 fs-6">touch_app</span>
                 Click on an intent to view its details.
             </div>
         </div>
-        <div class="relative h-full rounded-lg">
-            <!-- Instructional Overlay -->
 
-
-            <!-- Vflow Visualization -->
+        <!-- Visualization Container -->
+        <div class="position-relative border rounded bg-white" style="height: 75vh; overflow: hidden;">
             <vflow [nodes]="nodes" [edges]="edges" [background]="dotsBackgroundConfig"
                 (onConnect)="onEdgeConnect($event)" (onNodesChange)="onNodesChangeHandler($event)"
-                [connection]="connectionSettings" class="w-full h-[75vh] rounded-md border border-gray-200">
-
+                [connection]="connectionSettings" class="w-100 h-100">
                 <!-- Hidden edge context menu handlers -->
                 <ng-container *ngFor="let edge of edges">
-                    <div *ngIf="edge" (contextmenu)="selectEdge(edge); $event.preventDefault();" class="hidden"
+                    <div *ngIf="edge" (contextmenu)="selectEdge(edge); $event.preventDefault();" class="d-none"
                         [attr.data-edge-id]="edge.id">
                     </div>
                 </ng-container>
             </vflow>
-
-
         </div>
     </div>
 </div>
+
+<!-- Chat Widget -->
+<app-chat-widget></app-chat-widget>

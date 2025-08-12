@@ -1,273 +1,136 @@
-<div class="dashboard-container">
+<!-- Agent Dashboard -->
+<div class="container-fluid py-3">
+
     <!-- Agent Header -->
-    <div class="agent-header flex items-start justify-between gap-4">
-        <!-- Agent Info Section -->
-        <div class="agent-info flex flex-1 gap-4 min-w-0">
+    <div class="d-flex flex-wrap align-items-start justify-content-between gap-3 border-bottom pb-3">
+
+        <!-- Agent Info -->
+        <div class="d-flex flex-grow-1 gap-3 align-items-start min-w-0">
+
             <!-- Avatar -->
-            <div
-                class="agent-avatar flex-shrink-0 w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600">
-                <span class="material-icons text-3xl">smart_toy</span>
+            <div class="rounded bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center"
+                style="width:48px; height:48px;">
+                <i class="fa-solid fa-robot fs-4"></i>
             </div>
 
             <!-- Details -->
-            <div class="agent-details flex-1 min-w-0">
-                <h1 class="agent-name text-xl font-semibold text-gray-900 truncate">{{ agentData.displayName }}</h1>
-                <p class="agent-description text-gray-600 text-sm mt-1 truncate-2-lines line-clamp-2">
+            <div class="flex-grow-1">
+                <h1 class="h5 text-truncate mb-1">{{ agentData.displayName }}</h1>
+                <p class="text-muted small mb-2 text-truncate" style="max-width: 500px;">
                     {{ agentData.description }}
                 </p>
-                <div class="agent-meta flex flex-wrap gap-2 mt-2">
-                    <span
-                        class="meta-badge inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs bg-gray-100 text-gray-700">
-                        <span class="material-icons text-sm">language</span>
-                        {{ agentData.defaultLanguageCode }}
+
+                <!-- Meta Badges -->
+                <div class="d-flex flex-wrap gap-2">
+                    <span class="badge bg-light text-dark d-flex align-items-center gap-1">
+                        <i class="fa-solid fa-language"></i> {{ agentData.defaultLanguageCode }}
                     </span>
-                    <span class="meta-badge inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs"
-                        [class.bg-green-100]="agentData.status === 'Active'"
-                        [class.text-green-800]="agentData.status === 'Active'"
-                        [class.bg-yellow-100]="agentData.status === 'Draft'"
-                        [class.text-yellow-800]="agentData.status === 'Draft'"
-                        [class.bg-red-100]="agentData.status === 'Inactive'"
-                        [class.text-red-800]="agentData.status === 'Inactive'">
-                        <span class="status-dot w-2 h-2 rounded-full"
-                            [class.bg-green-500]="agentData.status === 'Active'"
-                            [class.bg-yellow-500]="agentData.status === 'Draft'"
-                            [class.bg-red-500]="agentData.status === 'Inactive'"></span>
+                    <span class="badge d-flex align-items-center gap-1" [ngClass]="{
+                  'bg-success text-dark': agentData.status === 'Active',
+                  'bg-warning text-dark': agentData.status === 'Draft',
+                  'bg-danger text-light': agentData.status === 'Inactive'
+                }">
+                        <span class="rounded-circle me-1" style="width:8px; height:8px;" [ngClass]="{
+                    'bg-success': agentData.status === 'Active',
+                    'bg-warning': agentData.status === 'Draft',
+                    'bg-danger': agentData.status === 'Inactive'
+                  }"></span>
                         {{ agentData.status || 'Active' }}
                     </span>
                 </div>
             </div>
         </div>
 
-        <!-- Actions Section -->
-        <div class="agent-actions flex flex-shrink-0 items-center gap-2">
-            <button
-                class="btn btn-secondary flex items-center gap-1 px-3 py-1.5 text-sm rounded-md border border-gray-300 bg-white text-gray-700">
-                <span class="material-icons text-base">settings</span>
-                <span class="whitespace-nowrap">Settings</span>
+        <!-- Actions -->
+        <div class="d-flex align-items-center gap-2">
+            <button class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1">
+                <i class="fa-solid fa-gear"></i> Settings
             </button>
-            <button
-                class="btn btn-primary flex items-center gap-1 px-3 py-1.5 text-sm rounded-md bg-blue-600 text-white hover:bg-blue-700 whitespace-nowrap">
-                <span class="material-icons text-base">play_arrow</span>
-                <span>Test Agent</span>
+            <button class="btn btn-primary btn-sm d-flex align-items-center gap-1">
+                <i class="fa-solid fa-play"></i> Test Agent
             </button>
         </div>
     </div>
 
-    <!-- Main Dashboard Content -->
-    <div class="dashboard-content">
-        <!-- Quick Actions -->
-        <div class="quick-actions">
-            <h2 class="section-title">Quick Actions</h2>
-            <div class="actions-grid">
-                <div class="action-card" (click)="navigateToIntents()">
-                    <div class="action-icon">
-                        <span class="material-icons">psychology</span>
-                    </div>
-                    <div class="action-content">
-                        <h3>Create Intent</h3>
-                        <p>Define what users can say to your agent</p>
-                    </div>
-                    <span class="material-icons arrow">arrow_forward</span>
-                </div>
+    <!-- Quick Actions -->
+    <div class="mt-4">
+        <h2 class="h6 mb-3">Quick Actions</h2>
+        <div class="row g-3">
 
-                <div class="action-card" (click)="navigateToEntities()">
-                    <div class="action-icon">
-                        <span class="material-icons">category</span>
-                    </div>
-                    <div class="action-content">
-                        <h3>Create Entity</h3>
-                        <p>Extract structured data from user input</p>
-                    </div>
-                    <span class="material-icons arrow">arrow_forward</span>
+            <div class="col-md-3">
+                <div class="card h-100 p-3" role="button" (click)="navigateToIntents()">
+                    <div class="text-primary mb-2"><i class="fa-solid fa-brain fs-4"></i></div>
+                    <h5 class="h6">Create Intent</h5>
+                    <p class="small text-muted mb-0">Define what users can say to your agent</p>
                 </div>
+            </div>
 
-                <div class="action-card" (click)="openTestConsole()">
-                    <div class="action-icon">
-                        <span class="material-icons">chat</span>
-                    </div>
-                    <div class="action-content">
-                        <h3>Test Your Agent</h3>
-                        <p>Try out conversations in the simulator</p>
-                    </div>
-                    <span class="material-icons arrow">arrow_forward</span>
+            <div class="col-md-3">
+                <div class="card h-100 p-3" role="button" (click)="navigateToEntities()">
+                    <div class="text-primary mb-2"><i class="fa-solid fa-list fs-4"></i></div>
+                    <h5 class="h6">Create Entity</h5>
+                    <p class="small text-muted mb-0">Extract structured data from user input</p>
                 </div>
+            </div>
 
-                <div class="action-card" (click)="viewAnalytics()">
-                    <div class="action-icon">
-                        <span class="material-icons">analytics</span>
-                    </div>
-                    <div class="action-content">
-                        <h3>View Analytics</h3>
-                        <p>Monitor your agent's performance</p>
-                    </div>
-                    <span class="material-icons arrow">arrow_forward</span>
+            <div class="col-md-3">
+                <div class="card h-100 p-3" role="button" (click)="openTestConsole()">
+                    <div class="text-primary mb-2"><i class="fa-solid fa-comments fs-4"></i></div>
+                    <h5 class="h6">Test Your Agent</h5>
+                    <p class="small text-muted mb-0">Try out conversations in the simulator</p>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card h-100 p-3" role="button" (click)="viewAnalytics()">
+                    <div class="text-primary mb-2"><i class="fa-solid fa-chart-line fs-4"></i></div>
+                    <h5 class="h6">View Analytics</h5>
+                    <p class="small text-muted mb-0">Monitor your agent's performance</p>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Agent Overview -->
-        <div class="overview-section">
-            <div class="overview-cards">
-                <!-- Intents Overview -->
-                <div class="overview-card">
-                    <div class="card-header">
-                        <h3>
-                            <span class="material-icons">psychology</span>
-                            Intents
-                        </h3>
-                        <button class="btn btn-primary btn-sm" (click)="navigateToIntents()">
-                            View All
-                        </button>
-                    </div>
-                    <div class="card-content">
-                        <div class="overview-stats">
-                            <div class="stat">
-                                <span class="stat-number">{{ intentsList.length }}</span>
-                                <span class="stat-label">Total Intents</span>
-                            </div>
-                            <!-- <div class="stat">
-                                <span class="stat-number">{{ getTotalTrainingPhrases() }}</span>
-                                <span class="stat-label">Training Phrases</span>
-                            </div> -->
-                        </div>
-                        <!-- <div class="recent-items" *ngIf="intents.length > 0">
-                            <h4>Recent Intents</h4>
-                            <div class="item-list">
-                                <div class="item" *ngFor="let intent of intents.slice(0, 3)">
-                                    <span class="item-name">{{ intent.name }}</span>
-                                    <span class="item-meta">{{ intent.trainingPhrases }} phrases</span>
-                                </div>
-                            </div>
-                        </div> -->
-                        <div class="empty-state" *ngIf="intentsList.length === 0">
-                            <span class="material-icons">psychology</span>
-                            <p>No intents created yet</p>
-                            <button class="btn btn-primary btn-sm" (click)="navigateToIntents()">
-                                Create First Intent
-                            </button>
-                        </div>
-                    </div>
+    <!-- Overview Section -->
+    <div class="mt-4 row g-3">
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fa-solid fa-brain me-2"></i>Intents</h5>
+                    <button class="btn btn-primary btn-sm" (click)="navigateToIntents()">View All</button>
                 </div>
-
-                <!-- Entities Overview -->
-                <div class="overview-card">
-                    <div class="card-header">
-                        <h3>
-                            <span class="material-icons">category</span>
-                            Entities
-                        </h3>
-                        <button class="btn btn-primary btn-sm" (click)="navigateToEntities()">
-                            View All
-                        </button>
-                    </div>
-                    <div class="card-content">
-                        <div class="overview-stats">
-                            <div class="stat">
-                                <span class="stat-number">{{ entitiesList.length }}</span>
-                                <span class="stat-label">Total Entities</span>
-                            </div>
-                            <!-- <div class="stat">
-                                <span class="stat-number">{{ getTotalEntityEntries() }}</span>
-                                <span class="stat-label">Entity Entries</span>
-                            </div> -->
-                        </div>
-                        <div class="recent-items" *ngIf="entitiesList.length > 0">
-                            <h4>Recent Entities</h4>
-                            <!-- <div class="item-list">
-                                <div class="item" *ngFor="let entity of entitiesList.slice(0, 3)">
-                                    <span class="item-name">{{ entity.name }}</span>
-                                    <span class="item-meta">{{ entity.entries }} entries</span>
-                                </div>
-                            </div> -->
-                        </div>
-                        <div class="empty-state" *ngIf="entitiesList.length === 0">
-                            <span class="material-icons">category</span>
-                            <p>No entities created yet</p>
-                            <button class="btn btn-primary btn-sm" (click)="navigateToEntities()">
-                                Create First Entity
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Training Status -->
-            <div class="training-status">
-                <div class="status-card">
-                    <div class="status-header">
-                        <h3>
-                            <span class="material-icons">model_training</span>
-                            Training Status
-                        </h3>
-                        <div class="status-indicator" [class]="trainingStatus.status">
-                            <span class="status-dot"></span>
-                            {{ trainingStatus.label }}
-                        </div>
-                    </div>
-                    <div class="status-content">
-                        <p class="status-message">{{ trainingStatus.message }}</p>
-                        <div class="status-actions" *ngIf="trainingStatus.status === 'ready'">
-                            <button class="btn btn-primary">
-                                <span class="material-icons">refresh</span>
-                                Retrain Agent
-                            </button>
-                        </div>
-                        <div class="status-actions" *ngIf="trainingStatus.status === 'training'">
-                            <div class="progress-bar">
-                                <div class="progress-fill" [style.width.%]="trainingStatus.progress"></div>
-                            </div>
-                            <p class="progress-text">{{ trainingStatus.progress }}% complete</p>
-                        </div>
+                <div class="card-body">
+                    <h6 class="mb-1">{{ intentsList.length }}</h6>
+                    <p class="text-muted small">Total Intents</p>
+                    <div *ngIf="intentsList.length === 0" class="text-center text-muted">
+                        <i class="fa-solid fa-brain fs-3"></i>
+                        <p>No intents created yet</p>
+                        <button class="btn btn-primary btn-sm" (click)="navigateToIntents()">Create First
+                            Intent</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Getting Started Guide -->
-        <div class="getting-started" *ngIf="isNewAgent()">
-            <div class="guide-card">
-                <div class="guide-header">
-                    <span class="material-icons">school</span>
-                    <h3>Getting Started</h3>
+        <!-- Entities -->
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fa-solid fa-list me-2"></i>Entities</h5>
+                    <button class="btn btn-primary btn-sm" (click)="navigateToEntities()">View All</button>
                 </div>
-                <div class="guide-content">
-                    <p>Build your first conversational AI agent in a few simple steps:</p>
-                    <div class="steps">
-                        <div class="step" [class.completed]="intentsList.length > 0">
-                            <div class="step-number">1</div>
-                            <div class="step-content">
-                                <h4>Create Intents</h4>
-                                <p>Define what users can say to your agent</p>
-                                <button class="btn btn-primary btn-sm" *ngIf="intentsList.length === 0"
-                                    (click)="navigateToIntents()">
-                                    Create Intent
-                                </button>
-                            </div>
-                        </div>
-                        <div class="step" [class.completed]="intentsList.length > 0">
-                            <div class="step-number">2</div>
-                            <div class="step-content">
-                                <h4>Add Entities</h4>
-                                <p>Extract structured data from user input</p>
-                                <button class="btn btn-primary btn-sm" *ngIf="intentsList.length === 0"
-                                    (click)="navigateToEntities()">
-                                    Create Entity
-                                </button>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">3</div>
-                            <div class="step-content">
-                                <h4>Test Your Agent</h4>
-                                <p>Try out conversations in the simulator</p>
-                                <button class="btn btn-primary btn-sm" (click)="openTestConsole()">
-                                    Open Simulator
-                                </button>
-                            </div>
-                        </div>
+                <div class="card-body">
+                    <h6 class="mb-1">{{ entitiesList.length }}</h6>
+                    <p class="text-muted small">Total Entities</p>
+                    <div *ngIf="entitiesList.length === 0" class="text-center text-muted">
+                        <i class="fa-solid fa-list fs-3"></i>
+                        <p>No entities created yet</p>
+                        <button class="btn btn-primary btn-sm" (click)="navigateToEntities()">Create First
+                            Entity</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
